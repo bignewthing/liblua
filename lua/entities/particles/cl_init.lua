@@ -8,7 +8,6 @@ function ENT:Initialize()
 	self.NextPart = CurTime()
 	self.Size = 5
 	self.EndSize = 6.5
-	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
 end
 
 function ENT:SetParticle(part)
@@ -30,18 +29,14 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self.Pos = (IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos()) + self.Offset
-
 	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
 
 	if self.NextPart < CurTime() then
-		if LocalPlayer():GetPos():Distance(self.Pos) > 1000 then return end
-
-		self.Emitter:SetPos(self.Pos)
+		self.Emitter:SetPos(self.Owner.Head:GetPos())
 		self.NextPart = CurTime() + math.Rand(0, 0.02)
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
-		local particle = self.Emitter:Add(self.Material, self.Pos)
+		local particle = self.Emitter:Add(self.Material, self.Pos || self.Owner.Head:GetPos())
 
 		particle:SetVelocity( self.Vel )
 		particle:SetDieTime( 30 )

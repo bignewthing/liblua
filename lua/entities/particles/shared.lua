@@ -10,5 +10,4 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
 
-ENT.Offset = Vector(0, 0, 0)
 ENT.Texture = "bouh.png"
