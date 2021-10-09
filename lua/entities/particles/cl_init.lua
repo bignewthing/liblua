@@ -26,11 +26,11 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
+	self.Vel = Vector(math.random(10, 50), math.random(50, 70), math.random(50, 100))
 
 	if self.NextPart < CurTime() then
 		self.Emitter:SetPos(self.Owner:GetPos())
-		self.NextPart = CurTime() + math.Rand(0, 0.02)
+		self.NextPart = CurTime() + math.Rand(0, 0.2)
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
 		local particle = self.Emitter:Add(self.Material, self.Owner:GetPos())
