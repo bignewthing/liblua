@@ -12,6 +12,7 @@ function ENT:Initialize()
 	self:SetNoDraw(true)
 
 	local phys = self:GetPhysicsObject()
+
 	if IsValid(phys) then
 		phys:Wake()
 	end

@@ -4,12 +4,11 @@ include('shared.lua')
 function ENT:Initialize()
 	self.Pos = IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos()
 	self.Emitter = ParticleEmitter(self.Pos)
-	self.Material = Material(self.Texture, "noclamp smooth")
+	self.Material = Material(self.Texture, self.Params)
 	self.NextPart = CurTime()
 	self.Size = 5
 	self.EndSize = 6.5
 	self.Multiplier = 1
-
 end
 
 function ENT:Next(time)
