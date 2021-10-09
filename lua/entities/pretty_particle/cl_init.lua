@@ -30,11 +30,12 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self.Pos = IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos()
-	local client = LocalPlayer()
+	self.Pos = (IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos())
+
+	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
 
 	if self.NextPart < CurTime() then
-		if client:GetPos():Distance(self.Pos) > 1000 then return end
+		if LocalPlayer():GetPos():Distance(self.Pos) > 1000 then return end
 
 		self.Emitter:SetPos(self.Pos)
 		self.NextPart = CurTime() + math.Rand(0, 0.02)
