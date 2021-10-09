@@ -30,7 +30,7 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self.Pos = (IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos())
+	self.Pos = (IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos()) + self.Offset
 
 	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
 
