@@ -10,4 +10,4 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
 
-ENT.Texture = "bouh.png"
+ENT.Texture = "flushed.png"
