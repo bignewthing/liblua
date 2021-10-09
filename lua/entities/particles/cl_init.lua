@@ -11,22 +11,29 @@ function ENT:Initialize()
 	self.Multiplier = 1
 end
 
-function ENT:Next(time)
+function ENT:Next(amount)
 	if !isnumber(amount) then return false end
-	self.NextPart = (CurTime() + math.Rand(0, time or 0.2)) + (self.Emitter:GetVelocity().x / self.Emitter:GetVelocity().y)
+
+	self.NextPart = CurTime() + (amount / self.Multiplier)
+	print(self.NextPart)
+	self.Speed = VectorRand(self.Owner:GetVelocity().y, self.Owner:GetVelocity().x)
+	print(self.Speed)
 
 	return true
 end
 
-function ENT:SetSize(start, endNumber)
-	self.Size = start
-	self.EndSize = endNumber
+function ENT:ParticleSize(number1, number2)
+	if !isnumber(number1) || !isnumber(number2) then return false end
+
+	self.Size = number1
+	self.EndSize = number2
+	return true
 end
 
 function ENT:ChangeMultiplier(amount)
 	if !isnumber(amount) then return false end
 
-	self.Multiplier = (amount / self.Vel)
+	self.Multiplier = (amount / self.Speed)
 	return true
 end
 
@@ -35,17 +42,16 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self.Vel = Vector(math.random(10, 50), math.random(50, 70), math.random(50, 100))
+	self:Next(0.02)
 
 	if self.NextPart < CurTime() then
 		self.Emitter:SetPos(self.Owner:GetPos())
-		self:Next()
 
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
 		local particle = self.Emitter:Add(self.Material, self.Owner:GetPos())
 
-		particle:SetVelocity( self.Vel + self.Multiplier )
+		particle:SetVelocity( self.Speed )
 		particle:SetDieTime( 30 )
 		particle:SetStartAlpha( 255 )
 		particle:SetEndAlpha( 40 )
