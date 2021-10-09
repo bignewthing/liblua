@@ -1,48 +1,44 @@
+
 -- Pretty Particles GMod addon
 -- All of the serversided particles settings goes there
-PrettyMeta = PrettyMeta or {
-    Settings = Settings or {
-        Max = 15, -- I want 15 maximum particles of this instance
-        AdminOnly = true,
-        Groups = Groups or {
-            Admin = Admin or { "superadmin" },
-            Users = Users or { "user" },
-        }
-    },
-    Manager = Manager or {
-        Count = 0,
-        ID = "Halloween",
-        Material = "halloween.png",
-        Owner = nil,
-        Particle = nil,
-        Spawn = function(self, pos, owner)
-            if self.Settings.Max >= self.Count then return false end
-            if self.Settings.AdminOnly && !owner:IsSuperAdmin() then return false end
-
-            if !IsValid(owner) then return false end
-            self.Manager.Owner = owner
-
-            self.Manager.Particle = ents.Create("pretty_particle")
-            self.Manager.Particle:SetName(self.Manager.ID)
-            self.Manager.Particle:SetOwner(self.Owner)
-            self.Manager.Particle.Texture = self.Material
-            self.Manager.Particle:Spawn()
-
+PrettyParticles = {
+    Info = {
+        Start = function(self)
+            if !IsValid(self.Owner) then return false end
+            if self.AdminOnly && !owner:IsSuperAdmin() then return false end
+            if !self.Groups.Users[self.Owner:GetUserGroup()] || !self.Groups.Admin[self.Owner:GetUserGroup()] then return false end
+        
+            self.Effect(ents.Create("pretty_particle"))
+            self.Effect:SetName(self.Manager.ID)
+            self.Effect:SetOwner(self.Owner)
+            self.Effect.Texture = self.Material
+            self.Effect:Spawn()
+        
             self.Count = self.Count + 1
-            return IsValid(self.Manager.Particle)
-        end
-    }
+            return IsValid(self.Particle)
+        end,
+
+        Maximum = 15,
+        Count = 0,
+        ID = "uwu",
+        Material = "uwu.png",
+        Owner = Entity(-1),
+        Effect = Entity(-1),
+
+        Groups = {
+            AdminOnly = true,
+            Admins = { ["superadmin"] = true },
+            Users = { ["user"] = true },
+        },
+    },
 }
 
-function CreatePrettyParticle(instance)
-    setmetatable(instance, PrettyMeta)
-end
+function PrettyParticles:New(id, mat, max, owner)
+    local prototype setmetatable({}, self)
+    prototype.ID = id
+    prototype.Material = mat
+    prototype.Maximum = max
+    prototype.Owner = owner
 
-concommand.Add("pretty_particle_test", function(caller)
-    local instance = {}
-    
-    CreateParticleInfo(instance)
-    instance.ID = "UwU"
-    instance.Material = "uwu.png"
-    instance.Manager.Spawn(instance, Vector(0, 0, 0), caller)
-end)
+    return prototype
+end
