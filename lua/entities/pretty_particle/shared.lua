@@ -9,3 +9,5 @@ ENT.Contact			= "N/A"
 ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
+
+ENT.Texture = "halloween.png"

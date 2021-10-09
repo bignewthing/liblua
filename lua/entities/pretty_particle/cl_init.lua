@@ -4,7 +4,7 @@ include('shared.lua')
 function ENT:Initialize()
 	self.Pos = IsValid(self.Owner) && self.Owner:GetPos() or self:GetPos()
 	self.Emitter = ParticleEmitter(self.Pos)
-	self.Material = Material("logo.png", "noclamp smooth")
+	self.Material = Material(self.Texture, "noclamp smooth")
 	self.NextPart = CurTime()
 	self.Size = 5
 	self.EndSize = 6.5
