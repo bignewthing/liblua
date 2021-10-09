@@ -11,10 +11,6 @@ function ENT:Initialize()
 
 end
 
-function ENT:SetParticle(part)
-	self.Material = Material(part, "noclamp smooth")
-end
-
 function ENT:SetSize(start, endNumber)
 	self.Size = start
 	self.EndSize = endNumber
