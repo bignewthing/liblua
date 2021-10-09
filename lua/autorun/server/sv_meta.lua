@@ -35,10 +35,10 @@ PrettyParticles = {
 
 function PrettyParticles:New(id, mat, max, owner)
     local prototype setmetatable({}, self)
-    prototype.ID = id
-    prototype.Material = mat
-    prototype.Maximum = max
-    prototype.Owner = owner
+    prototype.Info.ID = id
+    prototype.Info.Material = mat
+    prototype.Info.Maximum = max
+    prototype.Info.Owner = owner
 
     return prototype
 end
