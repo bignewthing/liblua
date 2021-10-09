@@ -1,3 +1,5 @@
+AddCSLuaFile("autorun/client/cl_init.lua")
+
 -- All of the serversided particles settings goes there
 PrettyParticlesMeta = PrettyParticlesMeta or {
     Settings = Settings or {
@@ -12,16 +14,15 @@ PrettyParticlesMeta = PrettyParticlesMeta or {
         ID = "MyParticle",
         Owner = nil,
         Spawn = function(self)
-           print(self.ID .. " has just spawned!")
+           Msg(Color(0, 255, 0), self.ID .. " has spawned!\n")
         end
     }
 }
 
 local function CreateParticleInfo(instance)
-    setmetatable(instance, PrettyParticlesMeta)
+    return setmetatable(instance, PrettyParticlesMeta)
 end
 
-local instance
-CreateParticleInfo(instance)
-instance.ID = "PD"
-instance.Spawn()
+local instance = CreateParticleInfo(instance)
+instance.ID = "TEST"
+instance.Manager.Spawn()
