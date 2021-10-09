@@ -42,9 +42,8 @@ function ENT:Draw()
 end
 
 function ENT:Think()
-	self:Next(0.02)
-
 	if self.NextPart < CurTime() then
+		self:Next(0.02)
 		self.Emitter:SetPos(self.Owner:GetPos())
 
 		local vec = VectorRand() * 3
