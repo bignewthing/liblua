@@ -8,6 +8,7 @@ function ENT:Initialize()
 	self.NextPart = CurTime()
 	self.Size = 5
 	self.EndSize = 6.5
+
 end
 
 function ENT:SetParticle(part)
@@ -32,11 +33,11 @@ function ENT:Think()
 	self.Vel = Vector(math.random(30, 90), math.random(30, 90), math.random(30, 90))
 
 	if self.NextPart < CurTime() then
-		self.Emitter:SetPos(self.Owner.Head:GetPos())
+		self.Emitter:SetPos(self.Owner:GetPos())
 		self.NextPart = CurTime() + math.Rand(0, 0.02)
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
-		local particle = self.Emitter:Add(self.Material, self.Pos || self.Owner.Head:GetPos())
+		local particle = self.Emitter:Add(self.Material, self.Owner:GetPos())
 
 		particle:SetVelocity( self.Vel )
 		particle:SetDieTime( 30 )
