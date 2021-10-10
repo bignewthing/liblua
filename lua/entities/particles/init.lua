@@ -17,3 +17,7 @@ function ENT:Initialize()
 		phys:Wake()
 	end
 end
+
+function ENT:Think()
+	if !IsValid(self.Owner) || !self.Owner:Alive() then self:Remove() end
+end

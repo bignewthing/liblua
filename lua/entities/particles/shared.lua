@@ -10,5 +10,5 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
 
-ENT.Texture = "flushed.png"
+ENT.Texture = "classic.png"
 ENT.Params = "noclamp smooth"
