@@ -45,12 +45,11 @@ function ENT:Think()
 	if self.NextPart < CurTime() then
 		self:Next(0.02)
 
-		self.Emitter:SetPos(self.Owner.Head[1])
-		self.Emitter:SetAngles(self.Owner.Head[2])
+		self.Emitter:SetPos(self.Owner.Head)
 
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
-		local particle = self.Emitter:Add(self.Material, self.Owner.Head[1])
+		local particle = self.Emitter:Add(self.Material, self.Owner.Head)
 
 		particle:SetVelocity( self.Speed )
 		particle:SetDieTime( 30 )
