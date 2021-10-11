@@ -9,8 +9,6 @@ function ENT:Initialize()
 	self.Size = 5
 	self.EndSize = 6.5
 	self.Multiplier = 1
-
-	self.Owner.Head = self.Owner:GetBonePosition(self.Owner:LookupBone("ValveBiped.Bip01_Spine"))
 end
 
 function ENT:Next(amount)
@@ -18,6 +16,8 @@ function ENT:Next(amount)
 
 	self.NextPart = CurTime() + (amount / self.Multiplier)
 	self.Speed = VectorRand(self.Owner:GetVelocity().y, self.Owner:GetVelocity().x)
+	self.Owner.Head = self.Owner:GetBonePosition(self.Bone)
+	if !istable(self.Owner.Head) then self.Owner.Head = self.Owner:GetPos() end
 
 	return true
 end
@@ -43,14 +43,14 @@ end
 
 function ENT:Think()
 	if self.NextPart < CurTime() then
-		self.Owner.Head = self.Owner:GetBonePosition(self.Owner:LookupBone("ValveBiped.Bip01_Spine"))
-
 		self:Next(0.02)
-		self.Emitter:SetPos(self.Owner.Head)
+
+		self.Emitter:SetPos(self.Owner.Head[1])
+		self.Emitter:SetAngles(self.Owner.Head[2])
 
 		local vec = VectorRand() * 3
 		local pos = self:LocalToWorld(vec)
-		local particle = self.Emitter:Add(self.Material, self.Owner.Head)
+		local particle = self.Emitter:Add(self.Material, self.Owner.Head[1])
 
 		particle:SetVelocity( self.Speed )
 		particle:SetDieTime( 30 )

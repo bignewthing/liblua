@@ -12,3 +12,4 @@ ENT.Spawnable = true
 
 ENT.Texture = "classic.png"
 ENT.Params = "noclamp smooth"
+ENT.Bone = 0
