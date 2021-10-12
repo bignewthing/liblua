@@ -9,12 +9,12 @@
 LibC = LibC or {}
 
 function LibC:Log(...)
-    MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ...)
+    MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ..., "\n")
 end
 
 -- throws a lil error use on debug only
 function LibC:Assertion(expr, ...)
-    if !expr then MsgC(Color(124, 34, 34), ...) end
+    if !expr then MsgC(Color(124, 34, 34), "[LibC - ASSERTION] ", ..., "\n") end
 end
 
 -- Defines the Promise class
