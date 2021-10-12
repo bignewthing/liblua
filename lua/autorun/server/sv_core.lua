@@ -24,15 +24,41 @@ LibC.Promise = {
     done = false,
     failed = false,
     callback = nil, 
+    catch = nil, 
 }
 
+--[[
+    gets the promise failure status
+    returns false if it fails
+
+    otherwise returns a prototype "promise"
+]]
 function LibC.Promise:Then(promise)
     if self.failed then return false end
     if !istable(promise) then return false end
     
+    LibC:Log("Calling new promise...")
     return LibC.Promise:Do(unpack(promise)).failed
 end
 
+--[[
+    Catch catches a promise exception and executes a onFailed promise
+    
+
+]]
+function LibC.Promise:Catch(onFailed)
+    if !self.failed then return false end
+    if !LibC:Assertion(isfunction(onFailed)) then return false end
+
+    LibC:Log(self.done.reason)
+    LibC:Log("Done? ", isstring(self.done.status))
+
+    return LibC.Promise:Do(unpack(promise))
+end
+
+--[[
+    Creates a promise object and returns a "proto"
+]]
 function LibC.Promise:Do(event, name)
     LibC:Log("Setting up promise...")
     local proto = setmetatable({}, LibC.Promise)
@@ -41,6 +67,7 @@ function LibC.Promise:Do(event, name)
     proto.event = event
     proto.name = name
     proto.Then = LibC.Promise.Then
+    proto.Catch = LibC.Promise.Catch
 
     -- now heres comme the do thing
     if !LibC:Assertion(isfunction(proto.event) || proto.event != nil, "Promise failed! event is not a function!") then 
