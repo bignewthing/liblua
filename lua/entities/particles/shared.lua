@@ -12,4 +12,4 @@ ENT.Spawnable = true
 
 ENT.Texture = "fire.png"
 ENT.Params = "noclamp smooth"
-ENT.Bone = 0
+ENT.Bone = Vector(0, 0, 0)
