@@ -9,7 +9,7 @@
 LibC = LibC or {}
 
 function LibC:Log(...)
-    MsgC(Color(180, 136, 53), ...)
+    MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ...)
 end
 
 -- throws a lil error use on debug only
@@ -58,16 +58,3 @@ function LibC.Promise:Do(event, name)
 end
 
 LibC:Log("sv_core: Loaded.") 
-
-LibC.Promise:Do(function()
-    LibC:Log("OOOOOH, Burning through the sky yeaaaahhhh")
-    return true
-end, "Freddie Mercury"):Then(
-    {
-        function()
-            LibC:Log("Cause i'm having a good time!")
-            return true    
-        end,
-        "Freddie Mercury (again)"
-    }
-) 
