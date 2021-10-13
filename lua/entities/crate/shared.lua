@@ -3,13 +3,9 @@
 ENT.Type = "anim"
 ENT.Base = "base_anim"
 
-ENT.PrintName		= "particle."
+ENT.PrintName		= "crate."
 ENT.Author			= "ALTernative"
 ENT.Contact			= "N/A"
 ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
-
-ENT.Texture = "fire.png"
-ENT.Params = "noclamp smooth"
-ENT.Offset = Vector(0, 0, 0)

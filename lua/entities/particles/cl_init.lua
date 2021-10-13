@@ -2,12 +2,11 @@
 include('shared.lua')
 
 function ENT:Initialize()
-	self.Pos = self:GetPos()
-	self.Emitter = ParticleEmitter(self.Pos)
+	self.Emitter = ParticleEmitter(self.Offset)
 	self.Material = Material(self.Texture, self.Params)
 	self.NextPart = CurTime()
-	self.Size = 5
-	self.EndSize = 6.5
+	self.Size = 15
+	self.EndSize = 2
 	self.Multiplier = 1
 end
 
@@ -16,8 +15,6 @@ function ENT:Next(amount)
 
 	self.NextPart = CurTime() + ((amount / 1000) / self.Multiplier)
 	self.Speed = VectorRand(self.Owner:GetVelocity().y, self.Owner:GetVelocity().x)
-	self.Pos = self.Pos + self.Bone
-
 	return true
 end
 
@@ -42,21 +39,17 @@ end
 
 function ENT:Think()
 	if self.NextPart < CurTime() then
-		self:Next(2)
+		self:Next(4)
+		self.Emitter:SetPos(self.Offset)
 
-		self.Emitter:SetPos(self.Pos)
-
-		local vec = VectorRand() * 3
-		local pos = self:LocalToWorld(vec)
-		local particle = self.Emitter:Add(self.Material, self.Pos)
-
+		local particle = self.Emitter:Add(self.Material, self.Offset)
 		particle:SetVelocity( self.Speed )
 		particle:SetDieTime( 30 )
 		particle:SetStartAlpha( 255 )
 		particle:SetEndAlpha( 40 )
 		particle:SetStartSize( self.Size )
 		particle:SetEndSize( self.EndSize )   
-		particle:SetRoll( math.random(30, 90) )
+		particle:SetRoll( math.random(30, 120) )
 		particle:SetRollDelta( 0 )
 	end
 end

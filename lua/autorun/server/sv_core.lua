@@ -20,7 +20,6 @@ end
 -- Defines the Promise class
 LibC.Promise = {
     event = nil,
-    name = nil,
     done = false,
     failed = false,
     callback = nil, 
@@ -33,12 +32,14 @@ LibC.Promise = {
 
     otherwise returns a prototype "promise"
 ]]
-function LibC.Promise:Then(promise)
+function LibC.Promise:Then(promise, newPromise, ...)
     if self.failed then return false end
-    if !istable(promise) then return false end
+    if !isfunction(promise) then return false end
     
-    LibC:Log("Calling new promise...")
-    return LibC.Promise:Do(unpack(promise)).failed
+    LibC:Log("Calling Promise...")
+    promise()
+
+    return LibC.Promise:Do(newPromise, ...)
 end
 
 --[[
@@ -50,6 +51,7 @@ function LibC.Promise:Catch(onFailed)
     if !self.failed then return false end
     if !LibC:Assertion(isfunction(onFailed)) then return false end
 
+    onFailed()
     LibC:Log(self.done.reason)
     LibC:Log("Done? ", isstring(self.done.status))
 
@@ -59,23 +61,21 @@ end
 --[[
     Creates a promise object and returns a "proto"
 ]]
-function LibC.Promise:Do(event, name)
+function LibC.Promise:Do(event, ...)
     LibC:Log("Setting up promise...")
     local proto = setmetatable({}, LibC.Promise)
     proto.__index = LibC.Promise
-
     proto.event = event
-    proto.name = name
     proto.Then = LibC.Promise.Then
     proto.Catch = LibC.Promise.Catch
 
     -- now heres comme the do thing
-    if !LibC:Assertion(isfunction(proto.event) || proto.event != nil, "Promise failed! event is not a function!") then 
+    if LibC:Assertion(isfunction(proto.event) || proto.event != nil, "Promise failed! event is not a function!") then 
         proto.failed = true 
         proto.done = { status = true, reason = "Event is not a function. If you see this error please contact a administrator" }
         LibC:Log("Prototype is not valid! ", proto.done.reason)
     else
-        if LibC:Assertion(proto.event(), "Promise failed, Function failed!") then 
+        if LibC:Assertion(proto.event(...), "Promise failed, Function failed!") then 
             proto.failed = true 
             proto.done = { status = true, reason = "Function has failed, please contact a server administrator" } 
         end
@@ -84,4 +84,4 @@ function LibC.Promise:Do(event, name)
     return proto
 end
 
-LibC:Log("sv_core: Loaded.") 
+LibC:Log("sv_core: Loaded Core file!") 
