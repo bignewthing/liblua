@@ -18,7 +18,7 @@ function LibC:Assertion(expr, ...)
 end
 
 -- Defines the Promise class
-LibC.Promise = {
+LibC.Promise = LibC.Promise or {
     Event = nil,
     done = false,
     failed = false,
