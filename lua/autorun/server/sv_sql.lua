@@ -11,7 +11,8 @@ LibC = LibC or {}
 
 LibC.SQL = LibC.SQL or {
     Enable = false,
-    Database = util.JSONToTable(file.Read("sql.json", "DATA")) -- TODO DO THIS
+    Instance = {},
+    Database = util.JSONToTable(file.Read("sql.json", "DATA") or "") -- TODO DO THIS
 }
 
 function LibC.SQL:Query()
