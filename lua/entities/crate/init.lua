@@ -25,12 +25,8 @@ function ENT:Dissolve()
 	self.dissolver:SetPos( self:GetPos() )
 	self.dissolver:Spawn()
 	self.dissolver:Activate()
-	self.dissolver:SetKeyValue( "self", "to_dissolve" )
+	self.dissolver:SetKeyValue( "target", "to_dissolve" )
 	self.dissolver:SetKeyValue( "magnitude", 1 )
 	self.dissolver:SetKeyValue( "dissolvetype", 0 )
 	self.dissolver:Fire( "Dissolve" )
-end
-
-function ENT:Use(activator, caller, use, value)
-
 end
