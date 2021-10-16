@@ -12,15 +12,15 @@ LibC = LibC or {}
 -- Default Database
 LibC.SQL = LibC.SQL or {
     Enable = false,
-    Database = util.JSONToTable(file.Read("sql.json", "DATA") or "") -- TODO DO THIS
+    Database = {} -- TODO DO THIS
 }
 
-function LibC.SQL:Init()
+function LibC.SQL:Init(database)
     LibC:Log("Setting up new Database...")
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
     proto.Enable = true
-    proto.Database = database
+    proto.Database = util.JSONToTable(file.Read(database, "DATA"))
 
     LibC:Log("Database created with success!")
     return proto
