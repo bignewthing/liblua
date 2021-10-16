@@ -18,7 +18,7 @@ function LibC:Assertion(expr, ...)
 end
 
 -- Creates a libc_trigger
-function LibC:CreateTrigger(pos, ent)
+function LibC:Trigger(pos, ent)
     if !IsValid(ent) then return nil end
 
     local trigger = ents.Create("libc_trigger")
