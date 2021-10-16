@@ -4,11 +4,13 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
 function ENT:Initialize()
-	self:PhysicsInit( SOLID_NONE )
-	self:SetMoveType( MOVETYPE_NONE )
-	self:SetSolid( SOLID_NONE )
+	self:PhysicsInit( SOLID_VPHYSICS )
+	self:SetMoveType( MOVETYPE_NOCLIP )
+	self:SetSolid( SOLID_VPHYSICS )
 	self:DrawShadow(false)
 	self:SetNoDraw(true)
+
+	self.Triggering = nil
 
 	local phys = self:GetPhysicsObject()
 

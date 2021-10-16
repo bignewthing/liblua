@@ -9,18 +9,18 @@
 -- MySQLOO Wrapper
 LibC = LibC or {}
 
+-- Default Database
 LibC.SQL = LibC.SQL or {
     Enable = false,
-    Instance = {},
     Database = util.JSONToTable(file.Read("sql.json", "DATA") or "") -- TODO DO THIS
 }
 
-function LibC.SQL:Query()
-    if !LibC.SQL.Enable then return false end
+function LibC.SQL:Init()
+    LibC:Log("Setting up new Database...")
+    local proto = setmetatable({}, LibC.SQL)
+    proto.__index = LibC.SQL
+    proto.Enable = true
+    proto.Database = database
 
-end
-
-function LibC.SQL:Commit()
-    if !LibC.SQL.Enable then return false end
-
+    return proto
 end
