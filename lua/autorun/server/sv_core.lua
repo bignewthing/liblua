@@ -25,7 +25,8 @@ LibC.Promise = LibC.Promise or {
     otherwise returns a prototype "promise"
 ]]
 function LibC.Promise:Then(...)
-    if !LibC:Assertion(isfunction(self.Event) || self.Event != nil, "Promise Failed! event is not a function!") then 
+    local res = self.Event(select(2, ...))
+    if !res || res == nil then 
         self.Failed = true 
         self.Done = { Status = true, reason = "Event is not a function." }
         LibC:Log("Prototype is not valid! ", self.Done.reason)
@@ -33,8 +34,7 @@ function LibC.Promise:Then(...)
         return false
     else
         LibC:Log("Then(ing) promise....")
-        self.Event() -- execute current event
-        return LibC.Promise:Do(...)  
+        return self:Do(...)
     end
 end
 
@@ -43,7 +43,7 @@ function LibC.Promise:Catch(...)
 
     LibC:Log(self.Done.reason)
     LibC:Log("Done? ", tostring(self.Done.Status))
-    return LibC.Promise:Do(...)
+    return self:Do(...)
 end
 
 --[[
@@ -56,6 +56,7 @@ function LibC.Promise:Do(...)
     proto.__index = LibC.Promise
     proto.Event = select(1, ...)
     proto.Data = select(2, ...)
+    proto.Do = LibC.Promise.Do
     proto.Then = LibC.Promise.Then
     proto.Catch = LibC.Promise.Catch
 
@@ -69,6 +70,11 @@ end
 -- throws a lil error use on debug only
 function LibC:Assertion(expr, ...)
     if !expr then MsgC(Color(124, 34, 34), "[LibC - ASSERTION] ", ..., "\n") end
+end
+
+-- Creates a libc_trigger
+function LibC:Trigger()
+    return ents.Create("libc_trigger")
 end
 
 LibC:Log("sv_core: Loaded Core File!") 

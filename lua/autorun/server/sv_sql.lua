@@ -51,4 +51,5 @@ function LibC.Config:Init(name, blob)
     return proto
 end
 
+
 LibC:Log("sv_sql: Loaded SQL File!") 
