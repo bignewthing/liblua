@@ -28,8 +28,8 @@ function LibC.Promise:Then(...)
     local res = select(1, ...)()
     if !res then 
         self.Failed = true 
-        self.Done = { Status = true, reason = "Event is not a function." }
-        LibC:Log("Prototype is not valid! ", self.Done.reason)
+        self.Done = { Status = true, Reason = "Event is not a function." }
+        LibC:Log("Prototype is not valid! ", self.Done.Reason)
 
         return false
     else
@@ -39,9 +39,9 @@ function LibC.Promise:Then(...)
 end
 
 function LibC.Promise:Catch(...)
-    if !self.failed then return false end
+    if !self.failed then return {} end
 
-    LibC:Log(self.Done.reason)
+    LibC:Log(self.Done.Reason)
     LibC:Log("Done? ", tostring(self.Done.Status))
     return self:Do(...)
 end
@@ -64,8 +64,8 @@ function LibC.Promise:Do(...)
 
     if !proto.Event(select(2, ...))  then 
         proto.Failed = true 
-        proto.Done = { Status = true, reason = "Event is not a function." }
-        LibC:Log("Prototype is not valid! ", proto.Done.reason)
+        proto.Done = { Status = true, Reason = "Event is not a function." }
+        LibC:Log("Prototype is not valid! ", proto.Done.Reason)
     end
     
     return proto
