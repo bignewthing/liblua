@@ -22,5 +22,29 @@ function LibC.SQL:Init()
     proto.Enable = true
     proto.Database = database
 
+    LibC:Log("Database created with success!")
+    return proto
+end
+
+--[[
+    LibC - Configuration file
+]]
+LibC.Config = LibC.Config or {
+    Name = "Configuration",
+    Active = false,
+    Data = {}
+}
+
+function LibC.Config:Init(name, blob)
+    if !isstring(blob) then return {} end
+
+    LibC:Log("Setting up new Config...")
+    local proto = setmetatable({}, LibC.Config)
+    proto.__index = LibC.Config
+    proto.Active = true
+    proto.Name = name
+    proto.Data = util.JSONToTable(file.Read(blob, "DATA"))
+
+    LibC:Log("Config created with success!")
     return proto
 end
