@@ -16,6 +16,8 @@ LibC.SQL = LibC.SQL or {
 }
 
 function LibC.SQL:Init(database)
+    if !isstring(database) then return {} end
+
     LibC:Log("Setting up new Database...")
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
@@ -48,3 +50,5 @@ function LibC.Config:Init(name, blob)
     LibC:Log("Config created with success!")
     return proto
 end
+
+LibC:Log("sv_core: Loaded SQL File!") 

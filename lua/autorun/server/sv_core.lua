@@ -19,7 +19,8 @@ end
 
 -- Creates a libc_trigger
 function LibC:CreateTrigger(pos, ent)
-    if !IsValid(ent) then return false end
+    if !IsValid(ent) then return nil end
+
     local trigger = ents.Create("libc_trigger")
     trigger:SetPos(pos)
     trigger.Triggering = ent
@@ -81,4 +82,4 @@ function LibC.Promise:Do(...)
     return proto
 end
 
-LibC:Log("sv_core: Loaded Core file!") 
+LibC:Log("sv_core: Loaded Core File!") 
