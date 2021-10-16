@@ -10,6 +10,6 @@ ENT.Purpose			= ""
 ENT.Instructions	= ""
 ENT.Spawnable = true
 
-ENT.Texture = "fire.png"
+ENT.Texture = "france.png"
 ENT.Params = "noclamp smooth"
 ENT.Offset = Vector(0, 0, 0)

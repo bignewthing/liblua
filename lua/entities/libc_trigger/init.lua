@@ -8,7 +8,7 @@ function ENT:Initialize()
 	self:SetMoveType( MOVETYPE_NOCLIP )
 	self:SetSolid( SOLID_VPHYSICS )
 	self:DrawShadow(false)
-	self:SetNoDraw(true)
+	self:SetNoDraw(false)
 
 	self.Triggering = nil
 
@@ -32,12 +32,12 @@ function ENT:Use(activator, caller, useType, value)
 end
 
 function ENT:Touch(ent)
-	if isfunction(self.OnUse) then self.OnUse(ent) end
+	if isfunction(self.OnTouch) then self.OnTouch(ent) end
 
 end
 
 function ENT:Think()
-	if isfunction(self.OnUse) then self.OnThink() end
+	if isfunction(self.OnThink) then self.OnThink() end
 end
 
 function ENT:SetTouch(method)

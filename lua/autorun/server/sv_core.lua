@@ -18,14 +18,8 @@ function LibC:Assertion(expr, ...)
 end
 
 -- Creates a libc_trigger
-function LibC:Trigger(pos, ent)
-    if !IsValid(ent) then return nil end
-
-    local trigger = ents.Create("libc_trigger")
-    trigger:SetPos(pos)
-    trigger.Triggering = ent
-
-    return ent
+function LibC:Trigger()
+    return ents.Create("libc_trigger")
 end
 
 -- Defines the Promise class
