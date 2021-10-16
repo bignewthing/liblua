@@ -25,8 +25,8 @@ LibC.Promise = LibC.Promise or {
     otherwise returns a prototype "promise"
 ]]
 function LibC.Promise:Then(...)
-    local res = self.Event(select(2, ...))
-    if !res || res == nil then 
+    local res = select(1, ...)()
+    if !res then 
         self.Failed = true 
         self.Done = { Status = true, reason = "Event is not a function." }
         LibC:Log("Prototype is not valid! ", self.Done.reason)
@@ -53,13 +53,21 @@ end
 function LibC.Promise:Do(...)
     LibC:Log("Setting up new promise...")
     local proto = setmetatable({}, LibC.Promise)
+
     proto.__index = LibC.Promise
     proto.Event = select(1, ...)
     proto.Data = select(2, ...)
     proto.Do = LibC.Promise.Do
     proto.Then = LibC.Promise.Then
+    proto.Done = false
     proto.Catch = LibC.Promise.Catch
 
+    if !proto.Event(select(2, ...))  then 
+        proto.Failed = true 
+        proto.Done = { Status = true, reason = "Event is not a function." }
+        LibC:Log("Prototype is not valid! ", proto.Done.reason)
+    end
+    
     return proto
 end
 
