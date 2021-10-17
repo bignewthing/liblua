@@ -10,8 +10,6 @@ function ENT:Initialize()
 	self:DrawShadow(true)
 	self:SetNoDraw(false)
 
-	self.Triggering = nil
-
 	local phys = self:GetPhysicsObject()
 
 	if IsValid(phys) then
