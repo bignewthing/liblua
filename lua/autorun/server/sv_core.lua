@@ -55,13 +55,13 @@ end
     Creates a promise object and returns a "proto"
     NOTE : Function must be first arg!
 ]]
-function LibC.Promise:Do(...)
+function LibC.Promise:Do(event, ...)
     LibC:Log("Setting up new promise...")
 
     local proto = setmetatable({}, LibC.Promise)
     proto.__index = LibC.Promise
 
-    proto.Event = select(1, ...) or nil
+    proto.Event = event or nil
     proto.Data = select(2, ...) or {}
     proto.Done = false
 
