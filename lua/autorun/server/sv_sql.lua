@@ -22,7 +22,7 @@ function LibC.SQL:Init(database)
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
     proto.Enable = true
-    proto.Database = util.JSONToTable(file.Read(database, "DATA"))
+    proto.Database = util.JSONToTable(file.Read(database, "DATA")) or {}
 
     LibC:Log("Database created with success!")
     return proto
@@ -37,6 +37,14 @@ LibC.Config = LibC.Config or {
     Data = {}
 }
 
+function LibC.Config:IsActive()
+    return self.Active
+end
+
+function LibC.Config:GetName()
+    return self.Name
+end
+
 function LibC.Config:Init(name, blob)
     if !isstring(blob) then return {} end
 
@@ -45,11 +53,13 @@ function LibC.Config:Init(name, blob)
     proto.__index = LibC.Config
     proto.Active = true
     proto.Name = name
-    proto.Data = util.JSONToTable(file.Read(blob, "DATA"))
+    proto.Data = util.JSONToTable(file.Read(blob, "DATA")) or {}
+    
+    proto.IsActive =  LibC.Config.IsActive;
+    proto.GetName =  LibC.Config.GetName;
 
     LibC:Log("Config created with success!")
     return proto
 end
-
 
 LibC:Log("sv_sql: Loaded SQL File!") 

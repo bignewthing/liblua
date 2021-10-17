@@ -25,17 +25,18 @@ LibC.Promise = LibC.Promise or {
     otherwise returns a prototype "promise"
 ]]
 function LibC.Promise:Then(...)
-    local res = select(1, ...)()
-    if !res then 
-        self.Failed = true 
-        self.Done = { Status = true, Reason = "Event is not a function." }
-        LibC:Log("Prototype is not valid! ", self.Done.Reason)
+    local method = select(1, ...)(select(2, ...)) -- ugly syntax but whatever
 
-        return false
-    else
-        LibC:Log("Then(ing) promise....")
-        return self:Do(...)
+    if !isfunction(method) || method == nil then 
+        proto:Throw("Event is not valid!")
+        return {}
+    elseif !method then
+        proto:Throw("Event returned false!")
+        return {}
     end
+
+    LibC:Log("Making another promise....")
+    return self:Do(...)
 end
 
 function LibC.Promise:Catch(...)
@@ -44,6 +45,12 @@ function LibC.Promise:Catch(...)
     LibC:Log(self.Done.Reason)
     LibC:Log("Done? ", tostring(self.Done.Status))
     return self:Do(...)
+end
+
+function LibC.Promise:Throw(reason)
+    self.Failed = true 
+    self.Done = { Status = true, Reason = reason }
+    LibC:Log("Promise is not valid! ", self.Done.Reason)
 end
 
 --[[
@@ -55,17 +62,18 @@ function LibC.Promise:Do(...)
     local proto = setmetatable({}, LibC.Promise)
 
     proto.__index = LibC.Promise
-    proto.Event = select(1, ...)
-    proto.Data = select(2, ...)
+    proto.Event = select(1, ...) or nil
+    proto.Data = select(2, ...) or {}
     proto.Do = LibC.Promise.Do
     proto.Then = LibC.Promise.Then
     proto.Done = false
     proto.Catch = LibC.Promise.Catch
+    proto.Throw = LibC.Promise.Throw
 
     if !proto.Event(select(2, ...))  then 
-        proto.Failed = true 
-        proto.Done = { Status = true, Reason = "Event is not a function." }
-        LibC:Log("Prototype is not valid! ", proto.Done.Reason)
+        proto:Throw("Event returned false!")
+    elseif !isfunction(proto.Event) then
+        proto:Throw("Event is not a function!")
     end
     
     return proto
