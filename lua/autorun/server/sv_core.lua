@@ -25,21 +25,15 @@ LibC.Promise = LibC.Promise or {
     otherwise returns a prototype "promise"
 ]]
 function LibC.Promise:Then(event, ...)
-
-    if !isfunction(event) || event == nil then 
-        self:Throw("Event is not valid!")
-        return {}
-    else
+    if !isfunction(event) || event == nil then return self:Throw("Event is not valid!") else
         event(select(1, ...)) -- execute then the event
         LibC:Log("Making another promise....")
-        
         return self:Do(event, ...)
     end
 end
 
 function LibC.Promise:Catch(...)
     if !self.failed then return {} end
-
     LibC:Log(self.Done.Reason)
     LibC:Log("Done? ", tostring(self.Done.Status))
     return self:Do(...)
@@ -49,6 +43,7 @@ function LibC.Promise:Throw(reason)
     self.Failed = true 
     self.Done = { Status = true, Reason = reason }
     LibC:Log("Promise is not valid! " .. self.Done.Reason)
+    return self
 end
 
 --[[
@@ -67,13 +62,8 @@ function LibC.Promise:Do(...)
     proto.Done = false
     proto.Catch = LibC.Promise.Catch
     proto.Throw = LibC.Promise.Throw
-
-    if !proto.Event(select(2, ...))  then 
-        proto:Throw("Event returned false!")
-    elseif !isfunction(proto.Event) then
-        proto:Throw("Event is not a function!")
-    end
     
+    proto.Event(select(2, ...))
     return proto
 end
 
@@ -86,7 +76,7 @@ function LibC:Assertion(expr, ...)
     if !expr then MsgC(Color(124, 34, 34), "[LibC - ASSERTION] ", ..., "\n") end
 end
 
--- Creates a libc_trigger
+-- Pretty wrapper for libc_trigger uwu
 function LibC:Trigger()
     return ents.Create("libc_trigger")
 end
