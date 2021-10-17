@@ -28,10 +28,10 @@ function LibC.Promise:Then(...)
     local method = select(1, ...)(select(2, ...)) -- ugly syntax but whatever
 
     if !isfunction(method) || method == nil then 
-        proto:Throw("Event is not valid!")
+        self:Throw("Event is not valid!")
         return {}
     elseif !method then
-        proto:Throw("Event returned false!")
+        self:Throw("Event returned false!")
         return {}
     end
 
