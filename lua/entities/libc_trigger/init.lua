@@ -5,7 +5,7 @@ include('shared.lua')
 
 function ENT:Initialize()
 	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_FLY )
+	self:SetMoveType( MOVETYPE_FLYGRAVITY )
 	self:SetSolid( SOLID_VPHYSICS )
 	self:DrawShadow(true)
 	self:SetNoDraw(false)
