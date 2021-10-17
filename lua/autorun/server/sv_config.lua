@@ -6,10 +6,10 @@
     Promise and core functionalities.
 ]]
 
--- MySQLOO Wrapper
 LibC = LibC or {}
 
--- Default Database
+-- MySQLOO Wrapper
+-- Default Database Interface
 LibC.SQL = LibC.SQL or {
     SQLite = false,
     Enable = false,
@@ -30,7 +30,7 @@ function LibC.SQL:Init(sqlite, database)
 end
 
 --[[
-    LibC - Configuration system
+    Configuration interface
 ]]
 LibC.Config = LibC.Config or {
     Name = "Configuration",
