@@ -11,17 +11,18 @@ LibC = LibC or {}
 
 -- Default Database
 LibC.SQL = LibC.SQL or {
+    SQLite = false,
     Enable = false,
     Database = {} -- TODO DO THIS
 }
 
-function LibC.SQL:Init(database)
+function LibC.SQL:Init(sqlite, database)
     if !isstring(database) then return {} end
-
     LibC:Log("Setting up new Database...")
 
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
+    proto.SQLite = sqlite
     proto.Enable = true
     proto.Database = util.JSONToTable(file.Read(database, "DATA")) or {}
 

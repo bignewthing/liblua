@@ -35,11 +35,12 @@ function LibC.Promise:Then(event, ...)
 end
 
 function LibC.Promise:Catch(...)
-    if !self.failed then return {} end
-    LibC:Log(self.Done.Reason)
-    LibC:Log("Done? ", tostring(self.Done.Status))
-
-    return self:Do(...)
+    if !self.failed then return {} else
+        LibC:Log(self.Done.Reason)
+        LibC:Log("Done? ", tostring(self.Done.Status))
+    
+        return self:Do(...)
+    end
 end
 
 function LibC.Promise:Throw(reason)
@@ -62,9 +63,10 @@ function LibC.Promise:Do(...)
 
     proto.Event = select(1, ...) or nil
     proto.Data = select(2, ...) or {}
+    proto.Done = false
+
     proto.Do = LibC.Promise.Do
     proto.Then = LibC.Promise.Then
-    proto.Done = false
     proto.Catch = LibC.Promise.Catch
     proto.Throw = LibC.Promise.Throw
     
@@ -78,6 +80,7 @@ end
 
 -- throws a lil error use on debug only
 function LibC:Assertion(expr, ...)
+    LibC:Log("Evaluating expression....")
     if !expr then MsgC(Color(124, 34, 34), "[LibC - ASSERTION] ", ..., "\n") end
 end
 
