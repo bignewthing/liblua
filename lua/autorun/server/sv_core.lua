@@ -30,16 +30,16 @@ function LibC.Promise:Then(event, ...)
         LibC:Log("Making promise....")
         event(select(1, ...)) -- execute then the event
 
-        return self:Do(event, ...)
+        return self
     end
 end
 
-function LibC.Promise:Catch(...)
+function LibC.Promise:Catch()
     if !self.failed then return {} else
         LibC:Log(self.Done.Reason)
         LibC:Log("Done? ", tostring(self.Done.Status))
     
-        return self:Do(...)
+        return self
     end
 end
 
@@ -62,7 +62,7 @@ function LibC.Promise:Do(event, ...)
     proto.__index = LibC.Promise
 
     proto.Event = event or nil
-    proto.Data = select(2, ...) or {}
+    proto.Data = select(1, ...) or {}
     proto.Done = false
 
     proto.Do = LibC.Promise.Do
@@ -70,7 +70,7 @@ function LibC.Promise:Do(event, ...)
     proto.Catch = LibC.Promise.Catch
     proto.Throw = LibC.Promise.Throw
     
-    proto.Event(select(2, ...))
+    proto.Event(select(1, ...))
     return proto
 end
 
