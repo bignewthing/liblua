@@ -8,7 +8,8 @@
 
 LibC = LibC or {}
 
--- Defines the Promise class
+-- Defines the Promise structure
+-- a Promise prototype
 LibC.Promise = LibC.Promise or {
     Event = nil,
     Done = false,
@@ -19,15 +20,16 @@ LibC.Promise = LibC.Promise or {
 }
 
 --[[
-    gets the promise failure Status
+    Gets the promise failure Status
     returns false if it fails
 
     otherwise returns a prototype "promise"
 ]]
 function LibC.Promise:Then(event, ...)
     if !isfunction(event) || event == nil then return self:Throw("Event is not valid!") else
+        LibC:Log("Making promise....")
         event(select(1, ...)) -- execute then the event
-        LibC:Log("Making another promise....")
+
         return self:Do(event, ...)
     end
 end
@@ -36,6 +38,7 @@ function LibC.Promise:Catch(...)
     if !self.failed then return {} end
     LibC:Log(self.Done.Reason)
     LibC:Log("Done? ", tostring(self.Done.Status))
+
     return self:Do(...)
 end
 
@@ -43,6 +46,7 @@ function LibC.Promise:Throw(reason)
     self.Failed = true 
     self.Done = { Status = true, Reason = reason }
     LibC:Log("Promise is not valid! " .. self.Done.Reason)
+
     return self
 end
 
@@ -52,9 +56,10 @@ end
 ]]
 function LibC.Promise:Do(...)
     LibC:Log("Setting up new promise...")
-    local proto = setmetatable({}, LibC.Promise)
 
+    local proto = setmetatable({}, LibC.Promise)
     proto.__index = LibC.Promise
+
     proto.Event = select(1, ...) or nil
     proto.Data = select(2, ...) or {}
     proto.Do = LibC.Promise.Do

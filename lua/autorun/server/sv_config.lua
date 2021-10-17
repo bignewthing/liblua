@@ -19,17 +19,17 @@ function LibC.SQL:Init(database)
     if !isstring(database) then return {} end
 
     LibC:Log("Setting up new Database...")
+
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
     proto.Enable = true
     proto.Database = util.JSONToTable(file.Read(database, "DATA")) or {}
 
-    LibC:Log("Database created with success!")
     return proto
 end
 
 --[[
-    LibC - Configuration file
+    LibC - Configuration system
 ]]
 LibC.Config = LibC.Config or {
     Name = "Configuration",
@@ -58,7 +58,6 @@ function LibC.Config:Init(name, blob)
     proto.IsActive =  LibC.Config.IsActive;
     proto.GetName =  LibC.Config.GetName;
 
-    LibC:Log("Config created with success!")
     return proto
 end
 
