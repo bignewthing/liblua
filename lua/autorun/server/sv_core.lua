@@ -24,19 +24,17 @@ LibC.Promise = LibC.Promise or {
 
     otherwise returns a prototype "promise"
 ]]
-function LibC.Promise:Then(...)
-    local method = select(1, ...)(select(2, ...)) -- ugly syntax but whatever
+function LibC.Promise:Then(event, ...)
 
-    if !isfunction(method) || method == nil then 
+    if !isfunction(event) || event == nil then 
         self:Throw("Event is not valid!")
         return {}
-    elseif !method then
-        self:Throw("Event returned false!")
-        return {}
+    else
+        event(select(1, ...)) -- execute then the event
+        LibC:Log("Making another promise....")
+        
+        return self:Do(event, ...)
     end
-
-    LibC:Log("Making another promise....")
-    return self:Do(...)
 end
 
 function LibC.Promise:Catch(...)
@@ -50,7 +48,7 @@ end
 function LibC.Promise:Throw(reason)
     self.Failed = true 
     self.Done = { Status = true, Reason = reason }
-    LibC:Log("Promise is not valid! ", self.Done.Reason)
+    LibC:Log("Promise is not valid! " .. self.Done.Reason)
 end
 
 --[[
