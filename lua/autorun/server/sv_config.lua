@@ -48,8 +48,8 @@ end
 
 function LibC.Config:Init(name, blob)
     if !isstring(blob) then return {} end
-
     LibC:Log("Setting up new Config...")
+    
     local proto = setmetatable({}, LibC.Config)
     proto.__index = LibC.Config
     proto.Active = true
