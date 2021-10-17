@@ -86,7 +86,7 @@ end
 
 -- Pretty wrapper for libc_trigger uwu
 function LibC:Trigger()
-    return ents.Create("libc_trigger")
+    return ents.Create("libc_template")
 end
 
 LibC:Log("sv_core: Loaded Core File!") 
