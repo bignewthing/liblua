@@ -7,19 +7,18 @@
 ]]
 
 LibC = LibC or {}
-LibC.RootDirectory = "addons/classic-content/lua/autorun/"
+LibC.RootDirectory = "autorun/modules/"
 
 function LibC:FindModules()
-    local files, dir = file.Find( LibC.RootDirectory .. "*", "GAME" )
+    local files, dir = file.Find( LibC.RootDirectory .. "*", "LUA" )
 
-    for k, file in ipairs(files) do
-        print(file)
+    for _, file in ipairs(files) do
         local prefix = string.lower( string.Left( file, 3 ) )
         
         if prefix == "sh_" then
-            AddCSLuaFile( file )
+            AddCSLuaFile( LibC.RootDirectory .. file )
             LibC:Log( "[AUTOLOAD] SHARED ADDCS: " .. file )
-            include( file )
+            include( LibC.RootDirectory .. file )
             LibC:Log( "[AUTOLOAD] SHARED INCLUDE: " .. file )
         end
     end
