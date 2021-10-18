@@ -14,12 +14,12 @@ function LibC:FindModules()
 
     for _, file in ipairs(files) do
         local prefix = string.lower( string.Left( file, 3 ) )
-        
-        if prefix == "sh_" then
-            AddCSLuaFile( LibC.RootDirectory .. file )
-            LibC:Log( "[AUTOLOAD] SHARED ADDCS: " .. file )
-            include( LibC.RootDirectory .. file )
-            LibC:Log( "[AUTOLOAD] SHARED INCLUDE: " .. file )
-        end
+        if prefix == "sh_" || prefix == "sh_" then AddCSLuaFile( LibC.RootDirectory .. file ) LibC:Log( "[AUTOLOAD] ADDCS: " .. file ) end
+        if prefix == "cl_" then LibC:Log( "[AUTOLOAD] SKIPPING CLIENTSIDE...") continue end
+
+        include( LibC.RootDirectory .. file )
+        LibC:Log( "[AUTOLOAD] INCLUDE: " .. file )
     end
 end
+
+LibC:Log("sv_moduleld: Loaded Module loader!") 

@@ -24,10 +24,10 @@ LibC.Promise = LibC.Promise or {
 
     otherwise returns a prototype "promise"
 ]]
-function LibC.Promise:Then(event, ...)
-    if !isfunction(event) || event == nil then return self:Throw("Event is not valid!") else
+function LibC.Promise:Then(Hook, ...)
+    if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
         LibC:Log("Making promise....")
-        event(...) -- execute then the event
+        Hook(...) -- execute then the Hook
 
         return self
     end
@@ -42,10 +42,18 @@ function LibC.Promise:Catch()
     end
 end
 
+function LibC.Promise:What()
+    LibC:Log(self.Done.Reason);
+end
+
 function LibC.Promise:Throw(reason)
-    self.Failed = true 
-    self.Done = { Status = true, Reason = reason }
-    LibC:Log("Promise is not valid! " .. self.Done.Reason)
+    self.Failed = true;
+    LibC:Log("-------------------------------------------");
+    LibC:Log("LibC: Promise failed!");
+    LibC:Log("-------------------------------------------");
+
+    if self.Done then self.Done.Reason = reason return self end
+    self.Done = { Status = true, Reason = reason };
 
     return self
 end
@@ -54,23 +62,24 @@ end
     Creates a promise object and returns a "proto"
     NOTE : Function must be first arg!
 ]]
-function LibC.Promise:Do(event, ...)
-    if !isfunction(event) then return {} end
+function LibC.Promise:Do(Hook, ...)
+    if !isfunction(Hook) then return nil end
     LibC:Log("Setting up new promise...")
 
-    local proto = setmetatable({}, LibC.Promise)
-    proto.__index = LibC.Promise
+    local proto = setmetatable({}, LibC.Promise);
+    proto.__index = LibC.Promise;
 
-    proto.Event = event
-    proto.Done = false
+    proto.Event = Hook;
+    proto.Done = false;
 
-    proto.Do = LibC.Promise.Do
-    proto.Then = LibC.Promise.Then
-    proto.Catch = LibC.Promise.Catch
-    proto.Throw = LibC.Promise.Throw
-    
-    proto.Event(...)
-    return proto
+    proto.Do = LibC.Promise.Do;
+    proto.Then = LibC.Promise.Then;
+    proto.Catch = LibC.Promise.Catch;
+    proto.Throw = LibC.Promise.Throw;
+    proto.What = LibC.Promise.What;
+
+    proto.Event(...);
+    return proto;
 end
 
 function LibC:Log(...)
