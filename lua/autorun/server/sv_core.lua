@@ -16,7 +16,6 @@ LibC.Promise = LibC.Promise or {
     Failed = false,
     Then = nil, 
     Catch = nil, 
-    Data = {}
 }
 
 --[[
@@ -28,7 +27,7 @@ LibC.Promise = LibC.Promise or {
 function LibC.Promise:Then(event, ...)
     if !isfunction(event) || event == nil then return self:Throw("Event is not valid!") else
         LibC:Log("Making promise....")
-        event(select(1, ...)) -- execute then the event
+        event(...) -- execute then the event
 
         return self
     end
@@ -56,13 +55,13 @@ end
     NOTE : Function must be first arg!
 ]]
 function LibC.Promise:Do(event, ...)
+    if !isfunction(event) then return {} end
     LibC:Log("Setting up new promise...")
 
     local proto = setmetatable({}, LibC.Promise)
     proto.__index = LibC.Promise
 
-    proto.Event = event or nil
-    proto.Data = select(1, ...) or {}
+    proto.Event = event
     proto.Done = false
 
     proto.Do = LibC.Promise.Do
@@ -70,7 +69,7 @@ function LibC.Promise:Do(event, ...)
     proto.Catch = LibC.Promise.Catch
     proto.Throw = LibC.Promise.Throw
     
-    proto.Event(select(1, ...))
+    proto.Event(...)
     return proto
 end
 
@@ -78,15 +77,4 @@ function LibC:Log(...)
     MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ..., "\n")
 end
 
--- throws a lil error use on debug only
-function LibC:Assertion(expr, ...)
-    LibC:Log("Evaluating expression....")
-    if !expr then MsgC(Color(124, 34, 34), "[LibC - ASSERTION] ", ..., "\n") end
-end
-
--- Pretty wrapper for libc_trigger uwu
-function LibC:Trigger()
-    return ents.Create("libc_template")
-end
-
-LibC:Log("sv_core: Loaded Core File!") 
+LibC:Log("sv_core: Loaded Core File!")
