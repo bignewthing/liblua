@@ -26,7 +26,9 @@ LibC.Promise = LibC.Promise or {
 ]]
 function LibC.Promise:Then(Hook, ...)
     if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
-        LibC:Log("Making promise....")
+        LibC:Log("-------------------------------------------");
+        LibC:Log("Making Promise....");
+        LibC:Log("-------------------------------------------");
         Hook(...) -- execute then the Hook
 
         return self
@@ -64,7 +66,9 @@ end
 ]]
 function LibC.Promise:Do(Hook, ...)
     if !isfunction(Hook) then return nil end
-    LibC:Log("Setting up new promise...")
+    LibC:Log("-------------------------------------------");
+    LibC:Log("Setting up new Promise...")
+    LibC:Log("-------------------------------------------");
 
     local proto = setmetatable({}, LibC.Promise);
     proto.__index = LibC.Promise;
