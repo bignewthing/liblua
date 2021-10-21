@@ -3,7 +3,7 @@
     LibC - LibClassic - The standard ClassiC Library
 	Copyright Amlal El Mahrouss & ClassiC all rights reserved
 
-    Promise and core functionalities.
+    Core functionalities.
 ]]
 
 LibC = LibC or {}
