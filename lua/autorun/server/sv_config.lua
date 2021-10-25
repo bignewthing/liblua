@@ -56,7 +56,7 @@ function LibC.Config:Append(path, makeTable, where)
     end
 end
 
-function LibC.Config:Init(name, blob, where)
+function LibC.Config:Init(name, where)
     if !isstring(blob) then return {} end
     LibC:Log(Color(182, 122, 43), "-------------------------------------------");
     LibC:Log(Color(182, 122, 43), "Setting up new Config...");
@@ -66,7 +66,7 @@ function LibC.Config:Init(name, blob, where)
     proto.__index = LibC.Config;
     proto.Active = true;
     proto.Name = name;
-    proto.Data = util.JSONToTable(file.Read(blob, where or "DATA")) or {};
+    proto.Data = {};
     proto.Append = LibC.Config.Append;
 
     proto.IsActive =  LibC.Config.IsActive;

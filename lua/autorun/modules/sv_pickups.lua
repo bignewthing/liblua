@@ -1,6 +1,6 @@
 LibC = LibC or {}
 -- The current chauldron
-LibC.Quests =  LibC.Quests or {
+LibC.Quests = {
     Blaster = "weapon_blaster",
     Active = false,
     Model = Model("models/zerochain/props_halloween/witchcauldron.mdl"),
@@ -29,13 +29,13 @@ LibC.Quests =  LibC.Quests or {
         proto.Ang = LibC.Quests.Ang
         proto.Model = LibC.Quests.Model
         proto.Init = LibC.Quests.Init
+        proto.Spawn = LibC.Quests.Spawn
 
-        LibC:Log("Cauldron was created with success!")
         return proto
     end,
 
     Spawn = function(self)
-        LibC.Quests.ConfigPoses = LibC.Config:Init("Coins_" .. game.GetMap(), game.GetMap(), "DATA");
+        LibC.Quests.ConfigPoses = LibC.Config:Init("Coins_" .. game.GetMap(), "DATA");
         LibC.Quests.ConfigPoses:Add(game.GetMap() .. "/", true, "DATA");
     end,
 

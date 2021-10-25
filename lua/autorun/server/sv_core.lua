@@ -20,9 +20,6 @@ LibC.Promise = LibC.Promise or { }
 ]]
 function LibC.Promise:Then(Hook, ...)
     if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
-        LibC:Log("-------------------------------------------");
-        LibC:Log(Color(173, 129, 24), "Making Promise....");
-        LibC:Log("-------------------------------------------");
         Hook(...) -- execute then the Hook
 
         return self
@@ -30,10 +27,8 @@ function LibC.Promise:Then(Hook, ...)
 end
 
 function LibC.Promise:Catch()
-    if !self.failed then return {} else
+    if !self.Done.Failed then return {} else
         LibC:Log(self.Done.Reason)
-        LibC:Log("Done? ", tostring(self.Done.Status))
-    
         return self
     end
 end
@@ -44,12 +39,7 @@ end
 
 function LibC.Promise:Throw(reason)
     self.Failed = true;
-    LibC:Log("-------------------------------------------");
-    LibC:Log(Color(85, 0, 0), "LibC: Assertion failed!");
-    LibC:Log("-------------------------------------------");
-
-    if self.Done then self.Done.Reason = reason return self end
-    self.Done = { Status = true, Reason = reason };
+    self.Done = { Failed = true, Reason = reason };
 
     return self
 end
@@ -60,10 +50,7 @@ end
 ]]
 function LibC.Promise:Do(Hook, ...)
     if !isfunction(Hook) then return nil end
-    LibC:Log("-------------------------------------------");
-    LibC:Log(Color(37, 88, 45), "Setting up new Promise...")
-    LibC:Log("-------------------------------------------");
-
+    
     local proto = setmetatable({}, LibC.Promise);
     proto.__index = LibC.Promise;
 
