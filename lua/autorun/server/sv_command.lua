@@ -19,7 +19,6 @@ function LibC:AddCommand(name, func, perms)
 end
 
 concommand.Add("classic", function(target, cmd, args)
-    if LibC.Commands[args[1]] && LibC.Commands[args[1]].Perms == target:GetUserGroup() then
-        LibC.Commands(target, select(2, args));
-    end
+    if !LibC.Commands[args[1]].Perms then target:ChatPrint("Command does not exist.") end
+    if target:IsUserGroup(LibC.Commands[args[1]].Perms) then LibC.Commands[args[1]].Function(target, select(2, args)); end
 end)
