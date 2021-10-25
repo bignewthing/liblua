@@ -7,7 +7,6 @@
 ]]
 
 LibC = LibC or {}
-LibC.Commands = LibC.Commands or {}
 
 function LibC:AddCommand(name, func, perms)
     if !isfunction(func) || !istable(perms) || !isstring(name) then return false end

@@ -7,6 +7,7 @@
 ]]
 
 LibC = LibC or {}
+
 LibC.RootDirectory = "autorun/modules/";
 LibC.ResDirectory = "autorun/content/";
 
@@ -28,9 +29,12 @@ function LibC:Find(root, res)
     end
 end
 
-LibC.AddCommand("reloadModules", function()
+LibC:AddCommand("reloadModules", function()
     LibC:Find(LibC.RootDirectory);
     LibC:Find(LibC.ResDirectory, true);
     -- you can add this
     LibC:Find(LibC.ResDirectory .. "sound/", true);
 end, "superadmin"); 
+
+-- automatic
+RunConsoleCommand("reloadModules");

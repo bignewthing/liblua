@@ -10,7 +10,7 @@ LibC = LibC or {}
 
 -- Defines the Promise structure
 -- a Promise prototype
-LibC.Promise = LibC.Promise or { }
+LibC.Promise = {};
 
 --[[
     Gets the promise failure Status
