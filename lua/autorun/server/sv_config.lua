@@ -65,8 +65,3 @@ function LibC.Config:Init(name, blob)
 
     return proto
 end
-
-LibC:Log("-------------------------------------------");
-LibC:Log("sv_config: Loaded Config+SQL File!");
-LibC:Log("-------------------------------------------");
-    

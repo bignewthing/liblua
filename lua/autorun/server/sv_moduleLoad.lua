@@ -27,5 +27,3 @@ function LibC:Find(root, res)
         end
     end
 end
-
-LibC:Log("sv_moduleld: Loaded Module loader!") 
