@@ -59,7 +59,7 @@ function LibC.Config:Init(name, blob, where)
     proto.Active = true;
     proto.Name = name;
     proto.Data = util.JSONToTable(file.Read(blob, where or "DATA")) or {};
-    proto.Find = LibC.Config.Find;
+    proto.Add = LibC.Config.Add;
 
     proto.IsActive =  LibC.Config.IsActive;
     proto.GetName =  LibC.Config.GetName;
