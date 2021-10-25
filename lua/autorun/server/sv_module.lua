@@ -29,12 +29,13 @@ function LibC:Find(root, res)
     end
 end
 
-LibC:AddCommand("reloadModules", function()
+local function reload()
     LibC:Find(LibC.RootDirectory);
     LibC:Find(LibC.ResDirectory, true);
     -- you can add this
     LibC:Find(LibC.ResDirectory .. "sound/", true);
-end, "superadmin"); 
+end
 
--- automatic
-RunConsoleCommand("reloadModules");
+LibC:AddCommand("reloadModules", function()
+    reload()
+end, "superadmin"); 

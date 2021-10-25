@@ -9,11 +9,13 @@
 LibC = LibC or {}
 
 function LibC:AddCommand(name, func, perms)
-    if !isfunction(func) || !istable(perms) || !isstring(name) then return false end
-    -- and then add the command
-    concommand.Add(name, function(target, cmd, args, argStr)
-        if perms[target:GetUserGroup()] then func(); end
-    end, nil, "LibC Command " .. name);
+    LibC.Promise:Init(function(name, func, perms)
+        self.Done.Reason = "isfunction(func) && istable(perms) && isstring(name) Failed";
+        return isfunction(func) && istable(perms) && isstring(name)
+    end, name, func, perms):Then(function(name)
+        concommand.Add(name, function(target, cmd, args, argStr)
+            if perms[target:GetUserGroup()] then func(); end
+        end);
+    end, name):Catch();
 
-    return true;
 end

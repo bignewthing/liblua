@@ -56,11 +56,15 @@ LibC.Quests = {
 }
 
 hook.Add("OnStartRound", "LSR::OnStartRound::Cauldron", function()
-    if istable(PowerRounds.CurrentPR) then return end
-
-    LibC.Quests.CurrentInstance = LibC.Quests:Create();
-    LibC.Quests.CurrentInstance:Init();
-    LibC.Quests.CurrentInstance:Spawn();
+    LibC.Promise:Init(function()
+        self.Done.Reason = "LibC.Quests.CurrentInstance = LibC.Quests:Create() Failed!";
+        LibC.Quests.CurrentInstance = LibC.Quests:Create();
+        return IsValid(LibC.Quests.CurrentInstance);
+    end):Then(function()
+        LibC.Quests.CurrentInstance:Init();
+        LibC.Quests.CurrentInstance:Spawn();
+        return true;
+    end):Catch();
 end)
 
 hook.Add("PlayerUse", "LSR::PlayerUse::Quest", function(target, ent)
@@ -73,6 +77,6 @@ hook.Add("Initialize", "LSR::CreateCoins", function()
 end)
 
 -- si t'es upluine tu peux ajouter a la liste des "pieces".
-LibC.AddCommand("reloadCoins", function(target)
+LibC:AddCommand("reloadCoins", function(target)
     if target:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
 end, "superadmin");
