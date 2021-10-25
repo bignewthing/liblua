@@ -10,13 +10,7 @@ LibC = LibC or {}
 
 -- Defines the Promise structure
 -- a Promise prototype
-LibC.Promise = LibC.Promise or {
-    Event = nil,
-    Done = false,
-    Failed = false,
-    Then = nil, 
-    Catch = nil, 
-}
+LibC.Promise = LibC.Promise or { }
 
 --[[
     Gets the promise failure Status
@@ -27,7 +21,7 @@ LibC.Promise = LibC.Promise or {
 function LibC.Promise:Then(Hook, ...)
     if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
         LibC:Log("-------------------------------------------");
-        LibC:Log("Making Promise....");
+        LibC:Log(Color(173, 129, 24), "Making Promise....");
         LibC:Log("-------------------------------------------");
         Hook(...) -- execute then the Hook
 
@@ -51,7 +45,7 @@ end
 function LibC.Promise:Throw(reason)
     self.Failed = true;
     LibC:Log("-------------------------------------------");
-    LibC:Log("LibC: Promise failed!");
+    LibC:Log(Color(85, 0, 0), "LibC: Assertion failed!");
     LibC:Log("-------------------------------------------");
 
     if self.Done then self.Done.Reason = reason return self end
@@ -67,7 +61,7 @@ end
 function LibC.Promise:Do(Hook, ...)
     if !isfunction(Hook) then return nil end
     LibC:Log("-------------------------------------------");
-    LibC:Log("Setting up new Promise...")
+    LibC:Log(Color(37, 88, 45), "Setting up new Promise...")
     LibC:Log("-------------------------------------------");
 
     local proto = setmetatable({}, LibC.Promise);

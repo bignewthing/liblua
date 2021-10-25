@@ -10,11 +10,7 @@ LibC = LibC or {}
 
 -- MySQLOO Wrapper
 -- Default Database Interface
-LibC.SQL = LibC.SQL or {
-    SQLite = false,
-    Enable = false,
-    Database = {} -- TODO DO THIS
-}
+LibC.SQL = LibC.SQL or {}
 
 function LibC.SQL:Init(sqlite, database)
     if !isstring(database) then return {} end
