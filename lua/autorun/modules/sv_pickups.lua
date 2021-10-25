@@ -56,15 +56,20 @@ LibC.Quests = {
 }
 
 hook.Add("OnStartRound", "LSR::OnStartRound::Cauldron", function()
-    if istable(PowerRounds.CurrentPR) then return end
+    LibC.Promise:Do(function()
+        LibC.Quests.CurrentInstance = LibC.Quests:Create();
 
-    LibC.Quests.CurrentInstance = LibC.Quests:Create();
-    LibC.Quests.CurrentInstance:Init();
-    LibC.Quests.CurrentInstance:Spawn();
+        return IsValid(LibC.Quests.CurrentInstance);
+    end):Then(function()
+        LibC.Quests.CurrentInstance:Init();
+        LibC.Quests.CurrentInstance:Spawn();
+
+        return true;
+    end)
 end)
 
-hook.Add("PlayerUse", "LSR::PlayerUse::Quest", function(target, ent)
-    if ent:GetClass() != "mu_loot" || target:GetLootCollected() <= 5 || target:HasWeapon(LibC.Quests.Blaster) then return end
+hook.Add("ShowHelp", "LSR::PickupWeapon", function(target, ent)
+    if target:GetLootCollected() >= 5 || target:HasWeapon(LibC.Quests.Blaster) then return end
     if !target:GetTKer() then target:Give(LibC.Quests.Blaster); end
 end)
 
@@ -74,5 +79,5 @@ end)
 
 -- si t'es upluine tu peux ajouter a la liste des "pieces".
 LibC.AddCommand("reloadCoins", function(target)
-    if target:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
-end, "fondateur");
+    if target:SteamID() == "STEAM_0:1:88070152" || target:SteamID() == "STEAM_0:1:519526081" then LibC.Quests.CreateCoins(); end
+end, {["fondateur"] = { true }}); 

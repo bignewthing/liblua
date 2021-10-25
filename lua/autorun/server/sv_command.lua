@@ -10,17 +10,11 @@ LibC = LibC or {}
 LibC.Commands = LibC.Commands or {}
 
 function LibC:AddCommand(name, func, perms)
-    if LibC.Commands[name] then LibC:Log("Command already exists! returning!") return false end
+    if !isfunction(func) || !istable(perms) || !isstring(name) then return false end
+    -- and then add the command
+    concommand.Add(name, function(target, cmd, args, argStr)
+        if perms[target:GetUserGroup()] then func(); end
+    end, nil, "LibC Command " .. name);
 
-    LibC.Commands[name] = {
-        Function = func,
-        Perms = perms
-    };
-
-    return true
+    return true;
 end
-
-concommand.Add("libexec", function(target, cmd, args)
-    if !LibC.Commands[args[1]] then LibC:Log("Command does not point to any existing command!") end
-    if target:IsUserGroup(LibC.Commands[args[1]].Perms) then LibC.Commands[args[1]].Function(target, select(2, args)); end
-end, nil, "LibC Commands");
