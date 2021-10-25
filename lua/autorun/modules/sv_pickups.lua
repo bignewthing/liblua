@@ -30,6 +30,9 @@ LibC.Quests = {
         proto.Init = LibC.Quests.Init
         proto.Spawn = LibC.Quests.Spawn
 
+        proto:Init();
+        proto:Spawn();
+
         return proto
     end,
 
@@ -57,15 +60,8 @@ LibC.Quests = {
 
 hook.Add("OnStartRound", "LSR::OnStartRound::Cauldron", function()
     LibC.Promise:Do(function()
-        LibC.Quests.CurrentInstance = LibC.Quests:Create();
-
-        return IsValid(LibC.Quests.CurrentInstance);
-    end):Then(function()
-        LibC.Quests.CurrentInstance:Init();
-        LibC.Quests.CurrentInstance:Spawn();
-
-        return true;
-    end)
+        return IsValid(LibC.Quests:Create());
+    end):Catch();
 end)
 
 hook.Add("ShowHelp", "LSR::PickupWeapon", function(target, ent)
