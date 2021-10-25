@@ -90,4 +90,6 @@ function LibC:Log(...)
     MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ..., "\n")
 end
 
-LibC:Log("sv_core: Loaded Core File!")
+LibC:Log("-------------------------------------------");
+LibC:Log("sv_core: Loaded Core File!");
+LibC:Log("-------------------------------------------");

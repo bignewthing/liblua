@@ -18,13 +18,15 @@ LibC.SQL = LibC.SQL or {
 
 function LibC.SQL:Init(sqlite, database)
     if !isstring(database) then return {} end
-    LibC:Log("Setting up new Database...")
+    LibC:Log("-------------------------------------------");
+    LibC:Log("Setting up new Database...");
+    LibC:Log("-------------------------------------------");
 
     local proto = setmetatable({}, LibC.SQL)
     proto.__index = LibC.SQL
     proto.SQLite = sqlite
     proto.Enable = true
-    proto.Database = util.JSONToTable(file.Read(database, "DATA")) or {}
+    if !sqlite then proto.Database = util.JSONToTable(file.Read(database, "DATA")) or {} end
 
     return proto
 end
@@ -48,7 +50,9 @@ end
 
 function LibC.Config:Init(name, blob)
     if !isstring(blob) then return {} end
-    LibC:Log("Setting up new Config...")
+    LibC:Log("-------------------------------------------");
+    LibC:Log("Setting up new Config...");
+    LibC:Log("-------------------------------------------");
     
     local proto = setmetatable({}, LibC.Config)
     proto.__index = LibC.Config
@@ -62,4 +66,7 @@ function LibC.Config:Init(name, blob)
     return proto
 end
 
-LibC:Log("sv_config: Loaded Config+SQL File!") 
+LibC:Log("-------------------------------------------");
+LibC:Log("sv_config: Loaded Config+SQL File!");
+LibC:Log("-------------------------------------------");
+    
