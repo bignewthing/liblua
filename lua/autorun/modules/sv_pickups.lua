@@ -42,7 +42,7 @@ LibC.Quests = {
 
     Spawn = function(self)
         for _, v in ipairs(self.Config.Data) do
-            local ent = ents.Create("quest")
+            local ent = ents.Create("coins")
             ent:SetModel(v.Object.Model);
             ent:SetSkin(v.Object.Skin);
             ent:Spawn();
