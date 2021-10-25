@@ -12,10 +12,10 @@ function CMenu()
 	return clientMenu
 end
 
-clientMenu.baseColor = Color(88, 24, 69, 255)
-clientMenu.frameColor = Color(234, 234, 234)
+clientMenu.baseColor = Color(51, 13, 40)
+clientMenu.frameColor = Color(88, 24, 69, 255)
 
-function clientMenu.OpenMenu(isVote, args)
+function clientMenu.OpenMenu()
 	local scrw, scrh = ScrW(), ScrH()
 	if IsValid(clientMenu.Menu) then
 		clientMenu.Menu:Remove()
@@ -26,8 +26,8 @@ function clientMenu.OpenMenu(isVote, args)
 	local time, delay, ease = 1.8, 0, .1
 
 	clientMenu.Menu = vgui.Create("DFrame")
-	clientMenu.Menu:SetTitle("")
-	clientMenu.Menu:ShowCloseButton(false)
+	clientMenu.Menu:SetTitle("LaSecteRose - Options")
+	clientMenu.Menu:ShowCloseButton(true)
 	clientMenu.Menu:MakePopup(true)
 	clientMenu.Menu:SetSize(0, 0)
 
@@ -38,13 +38,14 @@ function clientMenu.OpenMenu(isVote, args)
 	end)
 
 	clientMenu.Menu.Paint = function(me, w, h)
-		surface.SetDrawColor(clientMenu.frameColor)
-		surface.DrawRect(0, 0, w, h)
+		draw.RoundedBox(10, 0, 0, w, h, clientMenu.baseColor )
 	end
-	
+
 	clientMenu.Menu.OnSizeChanged = function(me, w, h)
 		if isAnimating then
 			me:Center()
 		end
 	end
 end
+
+CMenu().OpenMenu() 
