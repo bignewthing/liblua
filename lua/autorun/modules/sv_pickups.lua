@@ -78,6 +78,6 @@ hook.Add("Initialize", "LSR::CreateCoins", function()
 end)
 
 -- si t'es upluine tu peux ajouter a la liste des "pieces".
-LibC.AddCommand("reloadCoins", function(target)
+LibC:AddCommand("reloadCoins", function(target)
     if target:SteamID() == "STEAM_0:1:88070152" || target:SteamID() == "STEAM_0:1:519526081" then LibC.Quests.CreateCoins(); end
-end, {["fondateur"] = { true }}); 
+end, {["superadmin"] = { true }}); 

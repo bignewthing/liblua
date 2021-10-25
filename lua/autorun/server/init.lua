@@ -11,9 +11,5 @@ LibC = LibC or {}
 include("autorun/server/sv_core.lua");
 include("autorun/server/sv_config.lua");
 include("autorun/server/sv_command.lua");
-include("autorun/server/sv_moduleLoad.lua");
+include("autorun/server/sv_module.lua");
 AddCSLuaFile("autorun/client/cl_init.lua");
--- si t'es upluine tu peux ajouter a la liste des "pieces".
-LibC.AddCommand("pd", function(target)
-    LibC:Log("PD")
-end, {["superadmin"] = { true }});
