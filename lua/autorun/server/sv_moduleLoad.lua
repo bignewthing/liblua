@@ -28,5 +28,7 @@ function LibC:Find(root, res)
     end
 end
 
-LibC:Find(LibC.RootDirectory);
-LibC:Find(LibC.ResDirectory, true);
+LibC.AddCommand("reloadModules", function()
+    LibC:Find(LibC.RootDirectory);
+    LibC:Find(LibC.ResDirectory, true);
+end, "superadmin"); 

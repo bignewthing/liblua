@@ -33,12 +33,14 @@ LibC.Quests = {
         return proto
     end,
 
-    Spawn = function(self)
+    CreateCoins = function(self)
         self.Config = LibC.Config:Init("coins_of_" .. game.GetMap());
         self.Config:Append(game.GetMap() .. "/", true, "DATA");
 
         PrintTable(self.Config.Data)
+    end,
 
+    Spawn = function(self)
         for _, v in ipairs(self.Config.Data) do
             local ent = ents.Create("quest")
             ent:SetModel(v.Object.Model);
@@ -65,3 +67,12 @@ hook.Add("PlayerUse", "LSR::PlayerUse::Quest", function(target, ent)
     if ent:GetClass() != "mu_loot" || target:GetLootCollected() <= 5 || target:HasWeapon(LibC.Quests.Blaster) then return end
     if !target:GetTKer() then target:Give(LibC.Quests.Blaster); end
 end)
+
+hook.Add("Initialize", "LSR::CreateCoins", function()
+    LibC.Quests.CreateCoins();
+end)
+
+-- si t'es upluine tu peux ajouter a la liste des "pieces".
+LibC.AddCommand("reloadCoins", function(target)
+    if target:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
+end, "fondateur");

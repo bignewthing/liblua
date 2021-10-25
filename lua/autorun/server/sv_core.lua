@@ -18,9 +18,9 @@ LibC.Promise = LibC.Promise or { }
 
     otherwise returns a prototype "promise"
 ]]
-function LibC.Promise:Then(Hook, ...)
-    if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
-        Hook(...) -- execute then the Hook
+function LibC.Promise:Then(Func, ...)
+    if !isfunction(Func) || Func == nil then return self:Throw("Func is nil/not a function!!") else
+        Func(...) -- execute then the Func
         LibC:Log(Color(182, 122, 43), "Promise", Color(255, 255, 255) " was retained!");
 
         return self
@@ -49,13 +49,13 @@ end
     Creates a promise object and returns a "proto"
     NOTE : Function must be first arg!
 ]]
-function LibC.Promise:Do(Hook, ...)
-    if !isfunction(Hook) then return nil end
+function LibC.Promise:Do(Func, ...)
+    if !isfunction(Func) then return nil end
 
     local proto = setmetatable({}, LibC.Promise);
     proto.__index = LibC.Promise;
 
-    proto.Event = Hook;
+    proto.Func = Func;
     proto.Done = false;
 
     proto.Do = LibC.Promise.Do;
@@ -64,11 +64,11 @@ function LibC.Promise:Do(Hook, ...)
     proto.Throw = LibC.Promise.Throw;
     proto.What = LibC.Promise.What;
 
-    proto.Event(...);
+    proto.Func(...);
     return proto;
 end
 
 function LibC:Log(...)
-    MsgC(Color(180, 136, 53), "[LibC] ", ...);
+    MsgC(...);
     MsgC("\n");
 end

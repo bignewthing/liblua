@@ -3,7 +3,7 @@
     LibC - LibClassic - The standard ClassiC Library
 	Copyright Amlal El Mahrouss & ClassiC all rights reserved
 
-    Promise and core functionalities.
+    cfg and databases
 ]]
 
 LibC = LibC or {}
@@ -72,4 +72,4 @@ function LibC.Config:Init(name)
     proto.Data = {};
 
     return proto
-end  
+end
