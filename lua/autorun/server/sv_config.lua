@@ -54,14 +54,29 @@ function LibC.Config:Init(name, blob, where)
     LibC:Log("Setting up new Config...");
     LibC:Log("-------------------------------------------");
     
-    local proto = setmetatable({}, LibC.Config)
-    proto.__index = LibC.Config
-    proto.Active = true
-    proto.Name = name
-    proto.Data = util.JSONToTable(file.Read(blob, where or "DATA")) or {}
-    
+    local proto = setmetatable({}, LibC.Config);
+    proto.__index = LibC.Config;
+    proto.Active = true;
+    proto.Name = name;
+    proto.Data = util.JSONToTable(file.Read(blob, where or "DATA")) or {};
+    proto.Find = LibC.Config.Find;
+
     proto.IsActive =  LibC.Config.IsActive;
     proto.GetName =  LibC.Config.GetName;
 
     return proto
+end
+
+function LibC.Config:Add(path, makeTable, where)
+    local configs = file.Find(path .. "*", where or "DATA");
+
+    for _, cfg in ipairs(configs) do
+        local cfg = util.JSONToTable(file.Read(path .. cfg, where or "DATA"));
+        if !makeTable then self.Data = cfg LibC:Log("Replace cfg to Config!"); break end
+        self.Data[#self.Data + 1] = cfg;
+
+        LibC:Log(Color(182, 122, 43),"Added cfg to Config!");
+    end
+
+    return configs != {}
 end

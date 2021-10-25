@@ -87,5 +87,6 @@ function LibC.Promise:Do(Hook, ...)
 end
 
 function LibC:Log(...)
-    MsgC(Color(180, 136, 53), "[LibC] ", Color(255, 255, 255), ..., "\n")
+    MsgC(Color(180, 136, 53), "[LibC] ", ...);
+    MsgC("\n");
 end
