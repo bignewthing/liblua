@@ -21,7 +21,6 @@ LibC.Quests = {
     end,
 
     Create = function(self)
-        LibC:Log("Setting up new Cauldron...")
         local proto = setmetatable({}, LibC.Quests.Cauldron)
         proto.__index = LibC.Quests.Cauldron
         proto.Active = true
@@ -35,8 +34,17 @@ LibC.Quests = {
     end,
 
     Spawn = function(self)
-        LibC.Quests.ConfigPoses = LibC.Config:Init("Coins_" .. game.GetMap(), "DATA");
-        LibC.Quests.ConfigPoses:Add(game.GetMap() .. "/", true, "DATA");
+        self.Config = LibC.Config:Init("coins_of_" .. game.GetMap());
+        self.Config:Append(game.GetMap() .. "/", true, "DATA");
+
+        for _, v in ipairs(self.Config) do
+            local ent = ents.Create("quest")
+            ent:SetModel(v.Data.Object.Model);
+            ent:SetSkin(v.Data.Object.Skin);
+            ent:Spawn();
+            
+            ent:SetPos(Vector(v.Data.X, v.Data.Y, v.Data.Z));
+        end
     end,
 
     List = {},

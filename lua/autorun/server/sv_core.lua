@@ -21,6 +21,7 @@ LibC.Promise = LibC.Promise or { }
 function LibC.Promise:Then(Hook, ...)
     if !isfunction(Hook) || Hook == nil then return self:Throw("Event is nil/not a function!!") else
         Hook(...) -- execute then the Hook
+        LibC:Log(Color(182, 122, 43), "Promise", Color(255, 255, 255) " was retained!");
 
         return self
     end
@@ -50,7 +51,7 @@ end
 ]]
 function LibC.Promise:Do(Hook, ...)
     if !isfunction(Hook) then return nil end
-    
+
     local proto = setmetatable({}, LibC.Promise);
     proto.__index = LibC.Promise;
 
