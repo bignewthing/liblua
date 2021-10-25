@@ -42,11 +42,19 @@ function LibC.Config:Append(path, makeTable, where)
 
     for _, cfg in ipairs(configs) do
         local cfg = util.JSONToTable(file.Read(path .. cfg, where or "DATA"));
-        if !makeTable then self.Data = cfg; LibC:Log("Replace cfg to Config!"); break end
+        if !makeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
         self.Data[#self.Data + 1] = cfg;
 
-        LibC:Log(Color(182, 122, 43), "Appended", Color(255, 255, 255) " CFG", Color(182, 122, 43), " to Config!");
+        LibC:Log(Color(182, 122, 43), "Appended", Color(255, 255, 255), " CFG!");
     end
+end
+
+function LibC.Config:Compress()
+    if !istable(self.Data) then return false end
+    local copy = table.Copy(self.Data);
+
+    util.Compress(copy);
+    return copy;
 end
 
 function LibC.Config:Init(name)
