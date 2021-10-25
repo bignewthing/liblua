@@ -13,3 +13,9 @@ include("autorun/server/sv_config.lua");
 include("autorun/server/sv_command.lua");
 include("autorun/server/sv_moduleLoad.lua");
 AddCSLuaFile("autorun/client/cl_init.lua");
+
+print(-- si t'es upluine tu peux ajouter a la liste des "pieces".
+LibC.AddCommand("test", function()
+    LibC:Log("Hello, world!");
+
+end, "superadmin"))   

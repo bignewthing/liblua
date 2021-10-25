@@ -27,4 +27,3 @@ sound.Add({
 	volume = 		1,
 	sound = 		Sound("ambient/tones/equip4.wav")
 })
-
