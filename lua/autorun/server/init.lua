@@ -10,7 +10,7 @@ LibC = LibC or {}
 
 include("autorun/server/sv_core.lua")
 include("autorun/server/sv_config.lua")
-include("autorun/server/sv_moduleld.lua")
+include("autorun/server/sv_moduleLoad.lua")
 AddCSLuaFile("autorun/client/cl_init.lua")
 
 LibC:Log("--------------------------------")
