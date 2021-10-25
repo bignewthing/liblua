@@ -48,6 +48,18 @@ function LibC.Config:GetName()
     return self.Name
 end
 
+function LibC.Config:Add(path, makeTable, where)
+    local configs = file.Find(path .. "*", where or "DATA");
+
+    for _, cfg in ipairs(configs) do
+        local cfg = util.JSONToTable(file.Read(path .. cfg, where or "DATA"));
+        if !makeTable then self.Data = cfg LibC:Log("Replace cfg to Config!"); break end
+        self.Data[#self.Data + 1] = cfg;
+
+        LibC:Log(Color(182, 122, 43),"Added cfg to Config!");
+    end
+end
+
 function LibC.Config:Init(name, blob, where)
     if !isstring(blob) then return {} end
     LibC:Log("-------------------------------------------");
@@ -65,18 +77,4 @@ function LibC.Config:Init(name, blob, where)
     proto.GetName =  LibC.Config.GetName;
 
     return proto
-end
-
-function LibC.Config:Add(path, makeTable, where)
-    local configs = file.Find(path .. "*", where or "DATA");
-
-    for _, cfg in ipairs(configs) do
-        local cfg = util.JSONToTable(file.Read(path .. cfg, where or "DATA"));
-        if !makeTable then self.Data = cfg LibC:Log("Replace cfg to Config!"); break end
-        self.Data[#self.Data + 1] = cfg;
-
-        LibC:Log(Color(182, 122, 43),"Added cfg to Config!");
-    end
-
-    return configs != {}
 end
