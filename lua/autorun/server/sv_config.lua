@@ -45,7 +45,7 @@ function LibC.Config:Append(path, makeTable, where)
         if !makeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
         self.Data[#self.Data + 1] = cfg;
 
-        LibC:Log(Color(182, 122, 43), "Appended", Color(255, 255, 255), " CFG!");
+        LibC:Log(Color(182, 122, 43), "Appended CFG!");
     end
 end
 

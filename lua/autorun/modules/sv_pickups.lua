@@ -37,13 +37,15 @@ LibC.Quests = {
         self.Config = LibC.Config:Init("coins_of_" .. game.GetMap());
         self.Config:Append(game.GetMap() .. "/", true, "DATA");
 
-        for _, v in ipairs(self.Config) do
+        PrintTable(self.Config.Data)
+
+        for _, v in ipairs(self.Config.Data) do
             local ent = ents.Create("quest")
-            ent:SetModel(v.Data.Object.Model);
-            ent:SetSkin(v.Data.Object.Skin);
+            ent:SetModel(v.Object.Model);
+            ent:SetSkin(v.Object.Skin);
             ent:Spawn();
             
-            ent:SetPos(Vector(v.Data.X, v.Data.Y, v.Data.Z));
+            ent:SetPos(Vector(v.X, v.Y, v.Z));
         end
     end,
 
