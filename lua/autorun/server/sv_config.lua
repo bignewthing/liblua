@@ -48,7 +48,7 @@ function LibC.Config:GetName()
     return self.Name
 end
 
-function LibC.Config:Init(name, blob)
+function LibC.Config:Init(name, blob, where)
     if !isstring(blob) then return {} end
     LibC:Log("-------------------------------------------");
     LibC:Log("Setting up new Config...");
@@ -58,7 +58,7 @@ function LibC.Config:Init(name, blob)
     proto.__index = LibC.Config
     proto.Active = true
     proto.Name = name
-    proto.Data = util.JSONToTable(file.Read(blob, "DATA")) or {}
+    proto.Data = util.JSONToTable(file.Read(blob, where or "DATA")) or {}
     
     proto.IsActive =  LibC.Config.IsActive;
     proto.GetName =  LibC.Config.GetName;
