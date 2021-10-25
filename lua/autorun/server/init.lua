@@ -13,10 +13,8 @@ include("autorun/server/sv_config.lua")
 include("autorun/server/sv_moduleLoad.lua")
 AddCSLuaFile("autorun/client/cl_init.lua")
 
-LibC:Find(LibC.RootDirectory);
-LibC:Find(LibC.ResDirectory, true);
 LibC:Log("--------------------------------");
 LibC:Log("--------------------------------");
-LibC:Log("LibC: has been Loaded.") ;
+LibC:Log("LibC: has been Loaded.");
 LibC:Log("--------------------------------");
-LibC:Log("--------------------------------");   
+LibC:Log("--------------------------------");

@@ -8,7 +8,7 @@
 
 LibC = LibC or {}
 LibC.RootDirectory = "autorun/modules/";
-LibC.ResDirectory = "autorun/res";
+LibC.ResDirectory = "autorun/res/";
 
 function LibC:Find(root, res)
     local files, dir = file.Find( root .. "*", "LUA" )
@@ -27,3 +27,6 @@ function LibC:Find(root, res)
         end
     end
 end
+
+LibC:Find(LibC.RootDirectory);
+LibC:Find(LibC.ResDirectory, true);
