@@ -26,6 +26,7 @@ LibC.Quests = {
         proto.Model = LibC.Quests.Model
         proto.Init = LibC.Quests.Init
         proto.Spawn = LibC.Quests.Spawn
+        proto.CreateCoins = LibC.Quests.CreateCoins
 
         return proto
     end,
@@ -51,6 +52,15 @@ LibC.Quests = {
 }
 
 hook.Add("OnStartRound", "LSR::Cauldron", function()
+    RunConsoleCommand("generateCoins");
+end)
+
+-- Pour Upluine
+LibC:AddCommand("reloadCoins", function(TARGET)
+    if TARGET:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
+end, {["superadmin"] = { true }});
+
+LibC:AddCommand("generateCoins", function()
     LibC.Promise:Init(function()
         LibC.Quests.CurrentInstance = LibC.Quests:Create();
         LibC:Log("Created instance for " .. game.GetMap());
@@ -64,9 +74,4 @@ hook.Add("OnStartRound", "LSR::Cauldron", function()
 
         return true;
     end):Catch();
-end)
-
--- Pour Upluine
-LibC:AddCommand("reloadCoins", function(target)
-    if target:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
-end, "superadmin");
+end, {["superadmin"] = { true }})

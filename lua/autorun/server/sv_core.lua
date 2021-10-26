@@ -18,10 +18,7 @@ function LibC.Promise:Then(Func, ...)
 end
 
 function LibC.Promise:Catch()
-    if self.Done.Failed then
-        LibC:Log(self.Done.Reason);
-    end
-
+    LibC:Log(self.Done.Reason);
     return self
 end
 
@@ -34,20 +31,20 @@ end
 
 -- ctor
 function LibC.Promise:Init(Func)
-    if !isfunction(Func) then return nil end
-
-    local proto = setmetatable({}, LibC.Promise);
-    proto.__index = LibC.Promise;
-
-    proto.Func = Func;
-    proto.Done = { Failed = false, Reason = "" };
-
-    proto.Do = LibC.Promise.Do;
-    proto.Then = LibC.Promise.Then;
-    proto.Catch = LibC.Promise.Catch;
-    proto.Throw = LibC.Promise.Throw;
-
-    return proto
+    if !isfunction(Func) then return nil else
+        local proto = setmetatable({}, LibC.Promise);
+        proto.__index = LibC.Promise;
+    
+        proto.Func = Func;
+        proto.Done = { Failed = false, Reason = "" };
+    
+        proto.Do = LibC.Promise.Do;
+        proto.Then = LibC.Promise.Then;
+        proto.Catch = LibC.Promise.Catch;
+        proto.Throw = LibC.Promise.Throw;
+    
+        return proto
+    end
 end
 
 function LibC.Promise:Do(...)
@@ -63,8 +60,10 @@ function LibC.Promise:Do(...)
 end
 
 function LibC:Log(...)
-    MsgC(Color(255, 255, 255));
-    MsgC("[LibC] ");
     MsgC(...);
-    MsgC("\n");
+    print();
 end
+
+LibC:AddCommand("FDPPPP", function()
+    LibC:Log("Reloading modules...");
+end, {["superadmin"] = { true }});

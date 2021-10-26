@@ -29,7 +29,7 @@ function LibC:Find(root, res)
     end
 end
 
-local function reload()
+local function reloadModules()
     LibC:Log("Reloading modules...");
     LibC:Find(LibC.RootDirectory);
     LibC:Find(LibC.ResDirectory .. "materials/", true);
@@ -38,5 +38,7 @@ local function reload()
 end
 
 LibC:AddCommand("reloadModules", function()
-    reload();
-end, "superadmin");
+    reloadModules();
+end, {["superadmin"] = { true }});
+
+reloadModules();

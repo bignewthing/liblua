@@ -3,7 +3,7 @@
     LibC - LibClassic - The standard ClassiC Library
 	Copyright Amlal El Mahrouss & ClassiC all rights reserved
 
-    Configs
+    Configs core
 ]]
 
 LibC = LibC or {}
@@ -21,14 +21,6 @@ function LibC.Config:Append(path, makeTable, where)
         if !makeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
         self.Data[#self.Data + 1] = cfg;
     end
-end
-
-function LibC.Config:Compress()
-    if self.Data == nil then return nil end
-    local copy = table.Copy(self.Data);
-
-    util.Compress(copy);
-    return copy;
 end
 
 function LibC.Config:Init(name)
