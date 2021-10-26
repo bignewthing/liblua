@@ -1,6 +1,6 @@
 LibC = LibC or {}
--- The current chauldron
-LibC.Quests = {
+-- The Pickups
+LibC.Pickups = LibC.Pickups or {
     Blaster = "weapon_blaster",
     Active = false,
     Model = Model("models/zerochain/props_halloween/witchcauldron.mdl"),
@@ -18,15 +18,15 @@ LibC.Quests = {
     end,
 
     Create = function(self)
-        local proto = setmetatable({}, LibC.Quests.Cauldron)
-        proto.__index = LibC.Quests.Cauldron
+        local proto = setmetatable({}, LibC.Pickups)
+        proto.__index = LibC.Pickups
         proto.Active = true
-        proto.Pos = LibC.Quests.Pos
-        proto.Ang = LibC.Quests.Ang
-        proto.Model = LibC.Quests.Model
-        proto.Init = LibC.Quests.Init
-        proto.Spawn = LibC.Quests.Spawn
-        proto.CreateCoins = LibC.Quests.CreateCoins
+        proto.Pos = LibC.Pickups.Pos
+        proto.Ang = LibC.Pickups.Ang
+        proto.Model = LibC.Pickups.Model
+        proto.Init = LibC.Pickups.Init
+        proto.Spawn = LibC.Pickups.Spawn
+        proto.CreateCoins = LibC.Pickups.CreateCoins
 
         return proto
     end,
@@ -57,19 +57,19 @@ end)
 
 -- Pour Upluine
 LibC:AddCommand("reloadCoins", function(TARGET)
-    if TARGET:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
+    if TARGET:SteamID() == "STEAM_0:1:88070152" then LibC.Pickups.CreateCoins(); end
 end, {["superadmin"] = { true }});
 
 LibC:AddCommand("generateCoins", function()
     LibC.Promise:Init(function()
-        LibC.Quests.CurrentInstance = LibC.Quests:Create();
+        LibC.Pickups.CurrentInstance = LibC.Pickups:Create();
         LibC:Log("Created instance for " .. game.GetMap());
 
-        return LibC.Quests.CurrentInstance:Init();
+        return LibC.Pickups.CurrentInstance:Init();
     end):Do():Then(function()
-        LibC.Quests.CurrentInstance:CreateCoins();
+        LibC.Pickups.CurrentInstance:CreateCoins();
         LibC:Log("Created coins for " .. game.GetMap());
-        LibC.Quests.CurrentInstance:Spawn();
+        LibC.Pickups.CurrentInstance:Spawn();
         LibC:Log("Spawned coins for " .. game.GetMap());
 
         return true;

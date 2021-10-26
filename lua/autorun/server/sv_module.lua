@@ -41,4 +41,6 @@ LibC:AddCommand("reloadModules", function()
     reloadModules();
 end, {["superadmin"] = { true }});
 
-reloadModules();
+hook.Add("Initialize", "LSR::ModuleLD", function()
+    reloadModules();
+end)

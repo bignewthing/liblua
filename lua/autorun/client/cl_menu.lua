@@ -45,5 +45,3 @@ function clientMenu.OpenMenu()
 		end
 	end
 end
-
-CMenu().OpenMenu() 

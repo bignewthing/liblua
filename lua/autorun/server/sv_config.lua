@@ -12,27 +12,27 @@ LibC = LibC or {}
 -- Very useful.
 LibC.Config = {};
 
-function LibC.Config:Append(path, makeTable, where)
+function LibC.Config:Append(Path, MakeTable, Where)
     self.Data = {};
-    local configs = file.Find(path .. "*", where or "DATA");
+    local configs = file.Find(Path .. "*", Where or "DATA");
 
     for _, cfg in ipairs(configs) do
-        local cfg = util.JSONToTable(file.Read(path .. cfg, where or "DATA"));
-        if !makeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
+        local cfg = util.JSONToTable(file.Read(Path .. cfg, Where or "DATA"));
+        if !MakeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
         self.Data[#self.Data + 1] = cfg;
     end
 end
 
-function LibC.Config:Init(name)
-    if !isstring(name) then return {} end
+function LibC.Config:Init(Name)
+    if !IsValid(Name) then return {} end
 
     local proto = setmetatable({}, LibC.Config);
     proto.__index = LibC.Config;
     proto.Append = LibC.Config.Append;
 
     proto.Active = true;
-    proto.Name = name;
+    proto.Name = Name;
 
-    LibC:Log("CFG Added " .. name);
+    LibC:Log("CFG Added " .. Name);
     return proto
 end

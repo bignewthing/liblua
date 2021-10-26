@@ -19,6 +19,8 @@ end
 
 function LibC.Promise:Catch()
     LibC:Log(self.Done.Reason);
+    LibC:Log("Failed? " .. tostring(self.Done.Failed));
+
     return self
 end
 
