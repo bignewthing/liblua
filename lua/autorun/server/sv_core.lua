@@ -63,7 +63,3 @@ function LibC:Log(...)
     MsgC(...);
     print();
 end
-
-LibC:AddCommand("FDPPPP", function()
-    LibC:Log("Reloading modules...");
-end, {["superadmin"] = { true }});
