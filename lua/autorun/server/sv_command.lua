@@ -17,5 +17,4 @@ function LibC:AddCommand(name, func, perms)
             if perms[target:GetUserGroup()] then func(); end
         end);
     end, name):Catch();
-
 end

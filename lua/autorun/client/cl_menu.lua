@@ -1,5 +1,3 @@
-include("cl_utils.lua")
-
 surface.CreateFont("menuFont", {
 	font = "coolvetica",
 	size = 20,

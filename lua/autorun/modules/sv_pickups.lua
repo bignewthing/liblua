@@ -8,16 +8,12 @@ LibC.Quests = {
     Ang = Angle(-0.980034, 89.959778, 0.000000),
 
     Init = function(self)
-        if !self.Active then return false end
-
         self.Cauldron = ents.Create("cauldron");
         self.Cauldron:SetModel(self.Model)
         self.Cauldron:Spawn();
         self.Cauldron:SetPos(self.Pos);
         self.Cauldron:SetAngles(self.Ang);
         self.Cauldron.List = LibC.Quests.ConfigPoses or {};
-
-        return true
     end,
 
     Create = function(self)
@@ -36,8 +32,6 @@ LibC.Quests = {
     CreateCoins = function(self)
         self.Config = LibC.Config:Init("coins_of_" .. game.GetMap());
         self.Config:Append(game.GetMap() .. "/", true, "DATA");
-
-        PrintTable(self.Config.Data)
     end,
 
     Spawn = function(self)
@@ -55,24 +49,22 @@ LibC.Quests = {
     CurrentInstance = {}
 }
 
-hook.Add("OnStartRound", "LSR::OnStartRound::Cauldron", function()
+hook.Add("OnStartRound", "LSR::OnStartRound Cauldron", function()
     LibC.Promise:Init(function()
         self.Done.Reason = "LibC.Quests.CurrentInstance = LibC.Quests:Create() Failed!";
         LibC.Quests.CurrentInstance = LibC.Quests:Create();
-        return IsValid(LibC.Quests.CurrentInstance);
+        return LibC.Quests.CurrentInstance:Init();
     end):Then(function()
-        LibC.Quests.CurrentInstance:Init();
-        LibC.Quests.CurrentInstance:Spawn();
+        LibC.Quests:Spawn();
         return true;
     end):Catch();
 end)
 
-hook.Add("PlayerUse", "LSR::PlayerUse::Quest", function(target, ent)
-    if ent:GetClass() != "mu_loot" || target:GetLootCollected() <= 5 || target:HasWeapon(LibC.Quests.Blaster) then return end
-    if !target:GetTKer() then target:Give(LibC.Quests.Blaster); end
+hook.Add("PlayerUse", "LSR::Loadout Blaster", function(target)
+    target:Give(LibC.Quests.Blaster);
 end)
 
-hook.Add("Initialize", "LSR::CreateCoins", function()
+hook.Add("Initialize", "LSR::Create Coins", function()
     LibC.Quests.CreateCoins();
 end)
 
