@@ -13,7 +13,8 @@ LibC = LibC or {}
 LibC.Config = {};
 
 function LibC.Config:Append(Path, MakeTable, Where)
-    self.Data = {};
+    if !self.Active then return false end
+
     local configs = file.Find(Path .. "*", Where or "DATA");
 
     for _, cfg in ipairs(configs) do
@@ -21,6 +22,8 @@ function LibC.Config:Append(Path, MakeTable, Where)
         if !MakeTable then self.Data = cfg; LibC:Log("Replace config to Config!"); break end
         self.Data[#self.Data + 1] = cfg;
     end
+
+    return true
 end
 
 function LibC.Config:Init(Name)
@@ -32,6 +35,7 @@ function LibC.Config:Init(Name)
 
     proto.Active = true;
     proto.Name = Name;
+    proto.Data = {};
 
     LibC:Log("CFG Added " .. Name);
     return proto

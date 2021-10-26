@@ -12,3 +12,4 @@ LibC.QuestConstructor = LibC.QuestConstructor or {
         return proto
     end,
 };
+
