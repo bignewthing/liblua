@@ -40,7 +40,7 @@ function LibC.Promise:Init(Func)
     proto.__index = LibC.Promise;
 
     proto.Func = Func;
-    proto.Done = { Failed = false, Reason = "success!" };
+    proto.Done = { Failed = false, Reason = "" };
 
     proto.Do = LibC.Promise.Do;
     proto.Then = LibC.Promise.Then;
@@ -51,7 +51,7 @@ function LibC.Promise:Init(Func)
 end
 
 function LibC.Promise:Do(...)
-    if isfunction(self.Func) then proto.Func(...); else
+    if isfunction(self.Func) then self.Func(...); else
         LibC:Log("Promise failed!");
 
         self.Done.Failed = true;

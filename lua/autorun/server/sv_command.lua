@@ -14,7 +14,7 @@ function LibC:AddCommand(name, func, perms)
         return isfunction(func) && istable(perms) && isstring(name)
     end, name, func, perms):Then(function(name)
         concommand.Add(name, function(target, cmd, args, argStr)
-            if target:IsPlayer() && perms[target:GetUserGroup()] then func(); end
+            if target:IsPlayer() && perms[target:GetUserGroup()] then func(target, cmd, args, argStr); end
         end);
     end, name):Catch();
 end

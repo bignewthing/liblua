@@ -13,7 +13,6 @@ LibC.Quests = {
         self.Cauldron:Spawn();
         self.Cauldron:SetPos(self.Pos);
         self.Cauldron:SetAngles(self.Ang);
-        self.Cauldron.List = LibC.Quests.ConfigPoses or {};
 
         return IsValid(self.Cauldron);
     end,
@@ -51,28 +50,23 @@ LibC.Quests = {
     CurrentInstance = {}
 }
 
-hook.Add("OnStartRound", "LSR::OnStartRound Cauldron", function()
+hook.Add("OnStartRound", "LSR::Cauldron", function()
     LibC.Promise:Init(function()
-        self.Done.Reason = "LibC.Quests.CurrentInstance = LibC.Quests:Create() Failed!";
         LibC.Quests.CurrentInstance = LibC.Quests:Create();
+        LibC:Log("Created instance for " .. game.GetMap());
 
         return LibC.Quests.CurrentInstance:Init();
-    end):Then(function()
-        LibC.Quests:Spawn();
+    end):Do():Then(function()
+        LibC.Quests.CurrentInstance:CreateCoins();
+        LibC:Log("Created coins for " .. game.GetMap());
+        LibC.Quests.CurrentInstance:Spawn();
+        LibC:Log("Spawned coins for " .. game.GetMap());
 
         return true;
     end):Catch();
 end)
 
-hook.Add("PlayerUse", "LSR::Loadout Blaster", function(target)
-    target:Give(LibC.Quests.Blaster);
-end)
-
-hook.Add("Initialize", "LSR::Create Coins", function()
-    LibC.Quests.CreateCoins();
-end)
-
--- si t'es upluine tu peux ajouter a la liste des "pieces".
+-- Pour Upluine
 LibC:AddCommand("reloadCoins", function(target)
     if target:SteamID() == "STEAM_0:1:88070152" then LibC.Quests.CreateCoins(); end
 end, "superadmin");
