@@ -39,7 +39,7 @@ end
 
 LibC:AddCommand("reloadModules", function()
     reloadModules();
-end, {["superadmin"] = { true }});
+end, {["fondateur"] = { true }});
 
 hook.Add("Initialize", "LSR::ModuleLD", function()
     reloadModules();

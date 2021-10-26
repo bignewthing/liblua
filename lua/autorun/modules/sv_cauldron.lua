@@ -15,4 +15,4 @@ end)
 
 LibC:AddCommand("generateCauldron", function()
     if LibC.Pickups:Create() then LibC:Log("Created Cauldron for " .. game.GetMap()); end
-end, {["superadmin"] = { true }})
+end, {["superadmin"] = { true }, ["fondateur"] = { true }})
