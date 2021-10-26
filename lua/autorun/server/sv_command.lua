@@ -2,8 +2,6 @@
 --[[
     LibC - LibClassic - The standard ClassiC Library
 	Copyright Amlal El Mahrouss & ClassiC all rights reserved
-
-    command module
 ]]
 
 LibC = LibC or {}
