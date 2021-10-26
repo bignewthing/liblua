@@ -10,17 +10,19 @@ LibC = LibC or {}
 LibC.Promise = {};
 
 function LibC.Promise:Then(Func, ...)
-    if !self.Done.Failed then Func(...) end
-    self:Catch();
+    if !self.Done.Failed then Func(...) else
+        self:Catch();
+    end
 
     return self
 end
 
 function LibC.Promise:Catch()
-    if !self.Done.Failed then return nil else
+    if self.Done.Failed then
         LibC:Log(self.Done.Reason);
-        return self
     end
+
+    return self
 end
 
 function LibC.Promise:Throw(reason)
@@ -30,6 +32,7 @@ function LibC.Promise:Throw(reason)
     return self
 end
 
+-- ctor
 function LibC.Promise:Init(Func)
     if !isfunction(Func) then return nil end
 
@@ -47,10 +50,6 @@ function LibC.Promise:Init(Func)
     return proto
 end
 
---[[
-    Creates a promise object and returns a "proto"
-    NOTE : Function must be first arg!
-]]
 function LibC.Promise:Do(...)
     if isfunction(self.Func) then proto.Func(...); else
         LibC:Log("Promise failed!");
@@ -64,6 +63,8 @@ function LibC.Promise:Do(...)
 end
 
 function LibC:Log(...)
+    MsgC(Color(255, 255, 255));
+    MsgC("[LibC] ");
     MsgC(...);
     MsgC("\n");
 end

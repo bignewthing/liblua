@@ -14,6 +14,8 @@ LibC.Quests = {
         self.Cauldron:SetPos(self.Pos);
         self.Cauldron:SetAngles(self.Ang);
         self.Cauldron.List = LibC.Quests.ConfigPoses or {};
+
+        return IsValid(self.Cauldron);
     end,
 
     Create = function(self)
@@ -53,9 +55,11 @@ hook.Add("OnStartRound", "LSR::OnStartRound Cauldron", function()
     LibC.Promise:Init(function()
         self.Done.Reason = "LibC.Quests.CurrentInstance = LibC.Quests:Create() Failed!";
         LibC.Quests.CurrentInstance = LibC.Quests:Create();
+
         return LibC.Quests.CurrentInstance:Init();
     end):Then(function()
         LibC.Quests:Spawn();
+        
         return true;
     end):Catch();
 end)

@@ -31,7 +31,7 @@ end
 
 local function reload()
     LibC:Find(LibC.RootDirectory);
-    LibC:Find(LibC.ResDirectory, true);
+    LibC:Find(LibC.ResDirectory .. "materials/", true);
     -- you can add this
     LibC:Find(LibC.ResDirectory .. "sound/", true);
 end
