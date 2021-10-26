@@ -23,13 +23,14 @@ function LibC:Find(root, res)
             include( LibC.RootDirectory .. file );
             LibC:Log("[AUTOLOAD] INCLUDE: " .. file); 
         else
-            resource.AddFile(file);
+            resource.AddSingleFile(file);
             LibC:Log("[AUTOLOAD] ADD RES: " .. file);
         end
     end
 end
 
 local function reload()
+    LibC:Log("Reloading modules...");
     LibC:Find(LibC.RootDirectory);
     LibC:Find(LibC.ResDirectory .. "materials/", true);
     -- you can add this
@@ -37,5 +38,5 @@ local function reload()
 end
 
 LibC:AddCommand("reloadModules", function()
-    reload()
-end, "superadmin"); 
+    reload();
+end, "superadmin");

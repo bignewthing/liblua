@@ -59,7 +59,7 @@ hook.Add("OnStartRound", "LSR::OnStartRound Cauldron", function()
         return LibC.Quests.CurrentInstance:Init();
     end):Then(function()
         LibC.Quests:Spawn();
-        
+
         return true;
     end):Catch();
 end)
