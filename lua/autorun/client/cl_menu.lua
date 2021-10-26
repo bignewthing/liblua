@@ -10,7 +10,7 @@ function CMenu()
 	return clientMenu
 end
 
-clientMenu.baseColor = Color(51, 13, 40)
+clientMenu.baseColor = Color(255, 255, 255)
 clientMenu.frameColor = Color(88, 24, 69, 255)
 
 function clientMenu.OpenMenu()
@@ -36,7 +36,7 @@ function clientMenu.OpenMenu()
 	end)
 
 	clientMenu.Menu.Paint = function(me, w, h)
-		draw.RoundedBox(10, 0, 0, w, h, clientMenu.baseColor )
+		draw.RoundedBox(10, 0, 0, w, h, clientMenu.baseColor)
 	end
 
 	clientMenu.Menu.OnSizeChanged = function(me, w, h)
