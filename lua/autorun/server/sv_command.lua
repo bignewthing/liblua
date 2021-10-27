@@ -29,9 +29,21 @@ function LibC:Evaluate(Expression, Events)
         return Expression
     end):Do():Then(function()
         for _, v in pairs(Events) do
-            if !Target:Function() then return false end
+            if !self:Execute(v.Target, v.Function) then return false end
         end
 
         return true;
     end):Catch();
+end
+
+LibC.Interpreter = {};
+
+function LibC.Interpreter:Init()
+    local proto = setmetatable({}, LibC.Interpreter);
+    proto.__index = LibC.Interpreter;
+
+    proto.Evaluate = LibC.Evaluate;
+    proto.Execute = LibC.Execute;
+
+    return proto
 end

@@ -3,13 +3,13 @@
     LibC - LibClassic - The standard ClassiC Library
 	Copyright Amlal El Mahrouss & ClassiC all rights reserved
 
-    Promise and core functionalities.
+    Automatic includes.
 ]]
 
 LibC = LibC or {}
 
 LibC.RootDirectory = "autorun/modules/";
-LibC.ResDirectory = "content/";
+LibC.ResDirectory = "sound/";
 
 function LibC:Find(root, res)
     local files, dir = file.Find( root .. "*", "LUA" )
@@ -32,9 +32,7 @@ end
 local function reloadModules()
     LibC:Log("Reloading modules...");
     LibC:Find(LibC.RootDirectory);
-    LibC:Find(LibC.ResDirectory .. "materials/", true);
-    -- you can add this
-    LibC:Find(LibC.ResDirectory .. "sound/", true);
+    LibC:Find(LibC.ResDirectory, true);
 end
 
 LibC:AddCommand("reloadModules", function()
