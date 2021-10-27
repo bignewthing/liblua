@@ -18,32 +18,3 @@ function LibC:AddCommand(Name, Func, perms)
         return true;
     end, Name):Catch();
 end
-
--- Basic Interpreter
-function LibC:Execute(Target, Function)
-    return Target:Function();
-end
-
-function LibC:Evaluate(Expression, Events)
-    LibC.Promise:Init(function()
-        return Expression
-    end):Do():Then(function()
-        for _, v in pairs(Events) do
-            if !self:Execute(v.Target, v.Function) then return false end
-        end
-
-        return true;
-    end):Catch();
-end
-
-LibC.Interpreter = {};
-
-function LibC.Interpreter:Init()
-    local proto = setmetatable({}, LibC.Interpreter);
-    proto.__index = LibC.Interpreter;
-
-    proto.Evaluate = LibC.Evaluate;
-    proto.Execute = LibC.Execute;
-
-    return proto
-end
