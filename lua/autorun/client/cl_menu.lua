@@ -5,6 +5,7 @@ surface.CreateFont("menuFont", {
 })
 
 local clientMenu = {}
+clientMenu.Menu = {}
 
 function CMenu()
 	return clientMenu
@@ -24,7 +25,7 @@ function clientMenu.OpenMenu()
 	local time, delay, ease = 1.8, 0, .1
 
 	clientMenu.Menu = vgui.Create("DFrame")
-	clientMenu.Menu:SetTitle("LaSecteRose - Options")
+	clientMenu.Menu:SetTitle("ChaCha - Options")
 	clientMenu.Menu:ShowCloseButton(true)
 	clientMenu.Menu:MakePopup(true)
 	clientMenu.Menu:SetSize(0, 0)
@@ -45,3 +46,5 @@ function clientMenu.OpenMenu()
 		end
 	end
 end
+
+clientMenu.OpenMenu()

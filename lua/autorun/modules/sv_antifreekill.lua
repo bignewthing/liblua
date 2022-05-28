@@ -1,4 +1,6 @@
-hook.Add("PlayerShouldTakeDamage", "CC Death", function(victim,attacker) 
+hook.Add("PlayerShouldTakeDamage", "CC Death", function(victim, attacker) 
+    if (victim:GetMurderer()) then return false end
+
     if (victim != attacker && attacker:IsPlayer() && !attacker:GetMurderer()) then
         if (!attacker:GetMurderer()) then 
             attacker:Kill();
