@@ -38,7 +38,7 @@ function LibC.Promise:Init(Func)
         proto.__index = LibC.Promise;
     
         proto.Func = Func;
-        proto.Done = { Failed = false, Reason = "" };
+        proto.Done = {};
     
         proto.Do = LibC.Promise.Do;
         proto.Then = LibC.Promise.Then;
@@ -64,4 +64,12 @@ end
 function LibC:Log(...)
     MsgC(...);
     print();
+end
+
+function LibC:Ternary(Condition, Yes, No, YesArgs, NoArgs)
+    if (Condition) then
+        Yes(unpack(YesArgs))
+    else
+        No(NoArgs)
+    end
 end

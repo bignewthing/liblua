@@ -6,12 +6,12 @@
 
 LibC = LibC or {}
 
-function LibC:AddCommand(Name, Func, perms)
-    LibC.Promise:Init(function(Name, Func, perms)
-        return isfunction(Func) && istable(perms) && isstring(Name)
-    end, Name, Func, perms):Do():Then(function(Name)
+function LibC:AddCommand(Name, Func, Perms)
+    LibC.Promise:Init(function(Name, Func, Perms)
+        return isfunction(Func) && istable(Perms) && isstring(Name)
+    end, Name, Func, Perms):Do():Then(function(Name)
         concommand.Add(Name, function(target, cmd, args, argStr)
-            if target:IsPlayer() && perms[target:GetUserGroup()] then Func(target, cmd, args, argStr); end
+            if target:IsPlayer() && Perms[target:GetUserGroup()] then Func(target, cmd, args, argStr); end
         end);
 
         LibC:Log(Color(0, 255, 0), "Added ", Name, " to commands list!");
