@@ -52,22 +52,22 @@ net.Receive("VoteMap_Open", function()
     end
 end)
 
-local frame = vgui.Create("GCore:DFrame")
+ChaChaFrame = vgui.Create("GCore:DFrame")
 local lock = false
 
 local function ScoreBoard(close)
     if (!close && !lock) then
-        if (!IsValid(frame)) then
-            frame = vgui.Create("GCore:DFrame")
+        if (!IsValid(ChaChaFrame)) then
+            ChaChaFrame = vgui.Create("GCore:DFrame")
         end
 
-        frame:SetSize(ScrW(), ScrH())
+        ChaChaFrame:SetSize(ScrW(), ScrH())
         :SetHeader("ChaCha - Scoreboard", 50, { marginRight = 10 })
         :Center()
         :SetVisible(true)
     
-        local panel = vgui.Create("GCore:DScrollPanel", frame)
-        :SetSize(frame:GetWide(), frame:GetTall())
+        local panel = vgui.Create("GCore:DScrollPanel", ChaChaFrame)
+        :SetSize(ChaChaFrame:GetWide(), ChaChaFrame:GetTall())
         :SetPos(20, 70)
         :AddIconLayout(10, 10)
     
@@ -103,11 +103,11 @@ local function ScoreBoard(close)
                 RunConsoleCommand("mu_jointeam", 1)
             end
 
-            frame:Close()
+            ChaChaFrame:Close()
         end
     else
-        if (IsValid(frame) && !lock) then
-            frame:Remove()
+        if (IsValid(ChaChaFrame) && !lock) then
+            ChaChaFrame:Remove()
         end
     end
 end
@@ -122,6 +122,8 @@ end)
 
 hook.Add("ScoreboardShow", "ChaCha-Scoreboard-Show", function()
     ScoreBoard(false)
+
+    return false
 end)
 
 hook.Add("ScoreboardHide", "ChaCha-Scoreboard-Hide", function()

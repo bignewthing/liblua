@@ -17,3 +17,6 @@ AddCSLuaFile("autorun/sh_modules.lua");
 
 AddCSLuaFile("autorun/client/cl_init.lua");
 AddCSLuaFile("autorun/client/cl_menu.lua");
+
+include("autorun/gcore_lib.lua");
+AddCSLuaFile("autorun/gcore_lib.lua");
