@@ -7,7 +7,7 @@ net.Receive("VoteMap_Open", function()
 
     local frame = vgui.Create("GCore:DFrame")
     :SetSize(ScrW(), ScrH())
-    :SetHeader("ChaCha Vote", 50, { marginRight = 10 })
+    :SetHeader("ReCLASSIC", 50, { marginRight = 10 })
     :Center()
     :SetDraggable(true)
     :MakePopup()
@@ -62,7 +62,7 @@ local function ScoreBoard(close)
         end
 
         ChaChaFrame:SetSize(ScrW(), ScrH())
-        :SetHeader("ChaCha - Scoreboard", 50, { marginRight = 10 })
+        :SetHeader("ReCLASSIC - Scoreboard", 50, { marginRight = 10 })
         :Center()
         :SetVisible(true)
     

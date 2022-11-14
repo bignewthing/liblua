@@ -43,6 +43,6 @@ end
 LibC:Find(LibC.RootDirectory, false);
 LibC:Find(LibC.SoundDirectory, true);
 
-LibC:AddCommand("cl_reload_scripts", LibC.ReloadModules, LibC.Allowed);
+LibC:AddCommand("recl_reload_scripts", LibC.ReloadModules, LibC.Allowed);
 
 end

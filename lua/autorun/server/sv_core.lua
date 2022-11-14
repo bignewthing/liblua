@@ -27,7 +27,8 @@ end
 function LibC.Promise:Throw(reason)
     self.Done.Failed = true;
     self.Done = { Failed = true, Reason = reason };
-
+    error(self.Reason, self.Failed);
+    
     return self
 end
 
