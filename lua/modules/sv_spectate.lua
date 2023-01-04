@@ -14,6 +14,8 @@ end
 function LibC.Spectate:StartSpectate(Player)
     if (!IsValid(Player) or !Player:IsPlayer()) then return false end
 
+    Player.SpectateWeapons = Player.SpectateWeapons or {}
+
     for k, v in pairs(Player:GetWeapons()) do
         Player.SpectateWeapons[k] = v:GetClass()
     end

@@ -9,16 +9,13 @@ LibC.Enabled = false;
 LibC.RoundLeft = 20;
 
 LibC.MapList = {
-    ["mu_greenwood"] = true,
-    ["hns_poolparty"] = true,
-    ["mu_nightmare_church"] = true,
-    ["museum"] = true,
-    ["hns_lazytown_advanced"] = true,
-    ["gm_poolday"] = true,
-    ["ph_abandoned_office"] = true,
-    ["sz_castle_keep_snowy"] = true,
-    ["cs_office_night"] = true,
-    ["mcdonalds-mds-v2-beta"] = true,
+    ["mu_greenwood"] = "Banlieue de Greenwood.",
+    ["de_paris_subway2"] = "Metro Parisien II",
+    ["de_paris_subway"] = "Metro Parisien",
+    ["md_clue"] = "Manoir",
+    ["cs_office7"] = "Bureaux ChaCha",
+    ["mu_powerhermit"] = "Banlieue",
+    ["mu_powerhermit_snow"] = "Banlieue II",
 };
 
 local function activate_votemap()
@@ -31,7 +28,7 @@ local function activate_votemap()
 
     for k, v in pairs(LibC.MapList) do
         if (k == game.GetMap()) then continue end
-        pool[k] = v;
+        pool[k] = true;
     end
 
     net.Start("VoteMap_Open")
@@ -49,11 +46,10 @@ function LibC:AddVote(player, map)
     if (!LibC.MapList[map]) then return false end
     if (LibC.Votes[player]) then return false end
 
+    ClassicLib.Announce({player:Nick(), "à voté pour " .. LibC.MapList[map], ""});
+
     LibC.Votes[player] = map;
-
     player:SetNWString("PlayerDidVote", map);
-
-    PrintMessage(HUD_PRINTTALK, player:Nick() .. " a voté " .. map);
 
     print("------------------------------------");
     print("Steam-ID: " .. player:SteamID());
@@ -87,7 +83,7 @@ function LibC:StartTick()
             end
         end
 
-        PrintMessage(HUD_PRINTCENTER, highest_map .. " a été choisi comme étant la prochaine map!");
+        ClassicLib.Announce({"En avant vers: " .. LibC.MapList[highest_map], "Changement en cours.."});
         
         timer.Simple(LibC.DelayChange, function()
             LibC:ChangeMap(highest_map)
@@ -106,7 +102,6 @@ function LibC:ChangeMap(map)
     LibC.Votes = {}
     LibC.RoundLeft = 20;
     LibC.Enabled = false;
-    player:SetNWString("PlayerDidVote", "N'a pas voté...");
 
     return true;
 end
@@ -148,6 +143,9 @@ end)
 hook.Add("OnEndRound", "ChaCha-RoundCounter", function()
     if (LibC.RoundLeft < 1) then
         activate_votemap()
+        for _, ply in ipairs(team.GetPlayers(2)) do
+            ClassicLib.Freeze(ply)
+        end
     else
         LibC.RoundLeft = LibC.RoundLeft - 1;
     end

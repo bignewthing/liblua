@@ -34,8 +34,3 @@ function LibC.RemoveParticle(victim, cmd, args, args_str)
         end
     end
 end
-
-LibC.AllowedParticlesUser = { ["superadmin"] = true, };
-
-LibC:AddCommand('recl_add_particle', LibC.AddParticle, LibC.AllowedParticlesUser);
-LibC:AddCommand('recl_rm_particle', LibC.RemoveParticle, LibC.AllowedParticlesUser);
