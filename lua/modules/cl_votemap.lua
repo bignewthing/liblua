@@ -7,7 +7,7 @@ net.Receive("VoteMap_Open", function()
 
     local frame = vgui.Create("GCore:DFrame")
     :SetSize(530, 900)
-    :SetHeader("ChaCha - Vote", 50, { marginRight = 10 })
+    :SetHeader("Zone 51 - Vote", 50, { marginRight = 10 })
     :Center()
     :SetDraggable(true)
     :MakePopup()
@@ -69,7 +69,7 @@ local function ScoreBoard(close)
         end
 
         ChaChaFrame:SetSize(530, 900)
-        :SetHeader("ChaCha - Scoreboard", 50, { marginRight = 10 })
+        :SetHeader("Zone 51 - Scoreboard", 50, { marginRight = 10 })
         :Center()
         :SetVisible(true)
     
@@ -90,11 +90,15 @@ local function ScoreBoard(close)
             
                 function but:DoClick() 
                     if (LocalPlayer():Team() != 2) then
-                        ClassicLib.Alert.Show({ "Vous jouez désormais.", "" }) 
-                        RunConsoleCommand("mu_jointeam", 2)
+                        RunConsoleCommand("mu_jointeam", 2);
+                        if (LocalPlayer():Team() == 2) then
+                            ClassicLib.Alert.Show({ "Vous jouerez le prochain match.", "" }) 
+                        end
                     else
-                        ClassicLib.Alert.Show({ "Vous observez désormais.", "" })
-                        RunConsoleCommand("mu_jointeam", 1)
+                        RunConsoleCommand("mu_jointeam", 1);
+                        if (LocalPlayer():Team() == 1) then
+                            ClassicLib.Alert.Show({ "Vous êtes spectateur.", "" }) 
+                        end
                     end
         
                     ChaChaFrame:Close()
